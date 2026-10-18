@@ -129,6 +129,16 @@ struct BracketLayoutTests {
         #expect(layout.topY(round: 1, index: 0, focusRound: 1) == 0)
     }
 
+    @Test func championBadgeFitsAboveTheFinal() {
+        for focus in 0...1 {
+            let inset = layout.inset(aboveFinal: 110, focusRound: focus)
+            #expect(inset >= 0)
+            #expect(layout.topY(round: 2, index: 0, focusRound: focus) + inset >= 110)
+        }
+        // From the quarter-finals there is room already, so nothing moves.
+        #expect(layout.inset(aboveFinal: 110, focusRound: 0) == 0)
+    }
+
     @Test func iPhoneShowsTwoColumnsLikeTheSportsApp() {
         #expect(BracketLayout.visibleColumns(forWidth: 402, total: 4) == 2)
         #expect(BracketLayout.visibleColumns(forWidth: 834, total: 4) == 3)

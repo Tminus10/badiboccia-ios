@@ -38,6 +38,12 @@ struct BracketLayout: Equatable {
         return centerY(round: round, index: count - 1, focusRound: focusRound) + cardHeight / 2
     }
 
+    /// Extra space the knockout columns need on top so a block of `height` (the champion badge)
+    /// fits above the final; zero when the gap above the final is already big enough.
+    func inset(aboveFinal height: CGFloat, focusRound: Int) -> CGFloat {
+        max(height - topY(round: 2, index: 0, focusRound: focusRound), 0)
+    }
+
     /// How many columns fit side by side: two on iPhone, like the Sports app; more on iPad.
     static func visibleColumns(forWidth width: CGFloat, total: Int) -> Int {
         let fitting = width >= 1000 ? 4 : (width >= 680 ? 3 : 2)

@@ -7,6 +7,8 @@ struct BracketView: View {
     @Environment(AppModel.self) private var model
     @Environment(Navigator.self) private var navigator
     @State private var focusedColumn: Int? = 0
+    /// Height of the bracket's scroll view without the tab bar, to center the semi-finals in it.
+    @State private var visibleHeight: CGFloat = 0
 
     @ScaledMetric(relativeTo: .caption) private var headerHeight: CGFloat = 28
     @ScaledMetric(relativeTo: .footnote) private var rowHeight: CGFloat = 38
@@ -34,7 +36,8 @@ struct BracketView: View {
                         ScrollView(.horizontal) {
                             HStack(alignment: .top, spacing: 0) {
                                 ForEach(Array(phases.enumerated()), id: \.offset) { index, phase in
-                                    column(phase, detail: detail, layout: layout, focusRound: max(focus - 1, 0))
+                                    column(phase, detail: detail, layout: layout, focusRound: max(focus - 1, 0),
+                                           centerSemiFinals: phases[focus] == .semiFinals)
                                         .frame(width: columnWidth, alignment: .topLeading)
                                         .id(index)
                                 }
@@ -48,6 +51,11 @@ struct BracketView: View {
                         .scrollIndicators(.hidden)
                         .scrollDisabled(maxFocus == 0)
                         .padding(.bottom, 24)
+                    }
+                    .onScrollGeometryChange(for: CGFloat.self) { geometry in
+                        geometry.containerSize.height - geometry.contentInsets.top - geometry.contentInsets.bottom
+                    } action: { _, height in
+                        visibleHeight = height
                     }
                     .refreshable { await model.refresh() }
                 } else {
@@ -72,18 +80,26 @@ struct BracketView: View {
     }
 
     @ViewBuilder
-    private func column(_ phase: BracketPhase, detail: SeasonDetail, layout: BracketLayout, focusRound: Int) -> some View {
+    private func column(_ phase: BracketPhase, detail: SeasonDetail, layout: BracketLayout, focusRound: Int,
+                        centerSemiFinals: Bool) -> some View {
+        // All knockout rounds move down together, so the connector lines still meet.
+        let championInset = detail.podium?.championId != nil
+            ? layout.inset(aboveFinal: KnockoutColumn.championHeight, focusRound: focusRound) : 0
+        // With only the semi-finals and the final in view, the semi-finals sit in the vertical middle.
+        let semiFinalsHeight = layout.height(round: 1, count: detail.bracket.sf.count, focusRound: focusRound)
+        let centeredInset = centerSemiFinals ? (visibleHeight - 24 - semiFinalsHeight) / 2 : 0
+        let topInset = max(championInset, centeredInset)
         switch phase {
         case .groups:
             // No connector lines leave the group column, so it only needs a small gap.
             GroupStageColumn(detail: detail, width: layout.columnWidth - 10)
         case .quarterFinals:
-            KnockoutColumn(round: 0, games: detail.bracket.qf, detail: detail, layout: layout, focusRound: focusRound)
+            KnockoutColumn(round: 0, games: detail.bracket.qf, detail: detail, layout: layout, focusRound: focusRound, topInset: topInset)
         case .semiFinals:
-            KnockoutColumn(round: 1, games: detail.bracket.sf, detail: detail, layout: layout, focusRound: focusRound)
+            KnockoutColumn(round: 1, games: detail.bracket.sf, detail: detail, layout: layout, focusRound: focusRound, topInset: topInset)
         case .final:
             KnockoutColumn(round: 2, games: detail.bracket.final.map { [$0] } ?? [], detail: detail, layout: layout,
-                           focusRound: focusRound, thirdPlace: detail.bracket.third)
+                           focusRound: focusRound, topInset: topInset, thirdPlace: detail.bracket.third)
         }
     }
 }
@@ -176,7 +192,11 @@ private struct KnockoutColumn: View {
     let detail: SeasonDetail
     let layout: BracketLayout
     let focusRound: Int
+    var topInset: CGFloat = 0
     var thirdPlace: Game? = nil
+
+    /// Room for the champion badge above the final, including the gap to the card.
+    static let championHeight: CGFloat = 110
 
     private let line = Color.white.opacity(0.28)
 
@@ -197,22 +217,29 @@ private struct KnockoutColumn: View {
                 BracketGameCard(game: game, detail: detail, layout: layout)
                     .offset(y: layout.topY(round: round, index: index, focusRound: focusRound))
             }
+            if round == 2, let championID = detail.podium?.championId, let champion = detail.teamsByID[championID] {
+                ChampionBadge(team: champion, seasonID: detail.season.id)
+                    .frame(width: layout.cardWidth, height: Self.championHeight - 14, alignment: .bottom)
+                    .offset(y: layout.topY(round: round, index: 0, focusRound: focusRound) - Self.championHeight)
+            }
             if let thirdPlace {
                 thirdPlaceSection(thirdPlace)
             }
         }
         .frame(width: layout.columnWidth, height: height, alignment: .topLeading)
+        .padding(.top, topInset)
     }
+
+    /// Space between the final and the third-place game, so the champion and the final read as one block.
+    private let thirdPlaceGap: CGFloat = 32
 
     private var finalBottom: CGFloat {
         layout.height(round: round, count: games.count, focusRound: focusRound)
     }
 
     private var height: CGFloat {
-        thirdPlace == nil ? finalBottom : finalBottom + 40 + layout.cardHeight + championHeight
+        thirdPlace == nil ? finalBottom : finalBottom + thirdPlaceGap + 32 + layout.cardHeight
     }
-
-    private var championHeight: CGFloat { detail.podium?.championId != nil ? 110 : 0 }
 
     /// "⊐" shapes joining each pair of games, plus the stub into the next round's game.
     /// Plain rectangles rather than a Path, so they animate in step with the cards when the layout re-packs.
@@ -241,17 +268,12 @@ private struct KnockoutColumn: View {
                 .foregroundStyle(Theme.secondaryText)
                 .frame(height: 24, alignment: .bottom)
             BracketGameCard(game: game, detail: detail, layout: layout)
-            if let championID = detail.podium?.championId, let champion = detail.teamsByID[championID] {
-                ChampionBadge(team: champion, seasonID: detail.season.id)
-                    .frame(width: layout.cardWidth)
-                    .padding(.top, 16)
-            }
         }
-        .offset(y: finalBottom + 8)
+        .offset(y: finalBottom + thirdPlaceGap)
     }
 }
 
-/// The trophy and the winning team, under the final.
+/// The trophy and the winning team, above the final.
 private struct ChampionBadge: View {
     let team: Team
     let seasonID: Int
