@@ -1,0 +1,164 @@
+{
+    "team": {
+        "id": 28,
+        "name": "Sandra & Thomi",
+        "player1": "Sandra",
+        "player2": "Thomi",
+        "color_hex": "#96e48b",
+        "photo_url": null,
+        "group_id": null
+    },
+    "enrollments": [
+        {
+            "season_id": 4,
+            "season_label": "Sommerturnier 2018",
+            "year": 2018,
+            "group_id": 13,
+            "group_name": "A"
+        }
+    ],
+    "games": [
+        {
+            "id": 141,
+            "season_id": 4,
+            "phase": "group",
+            "group_id": 13,
+            "group_name": "A",
+            "slot_index": null,
+            "team_a_id": 30,
+            "team_b_id": 28,
+            "sets_a": 1,
+            "sets_b": 2,
+            "played_date": "2018-06-05",
+            "game_time": null,
+            "slot_minutes": 90,
+            "winner_team_id": 28,
+            "placeholder_a": null,
+            "placeholder_b": null,
+            "updated_at": "2026-10-18 19:40:07"
+        },
+        {
+            "id": 143,
+            "season_id": 4,
+            "phase": "group",
+            "group_id": 13,
+            "group_name": "A",
+            "slot_index": null,
+            "team_a_id": 29,
+            "team_b_id": 28,
+            "sets_a": 0,
+            "sets_b": 2,
+            "played_date": "2018-06-10",
+            "game_time": null,
+            "slot_minutes": 90,
+            "winner_team_id": 28,
+            "placeholder_a": null,
+            "placeholder_b": null,
+            "updated_at": "2026-09-15 16:58:58"
+        },
+        {
+            "id": 138,
+            "season_id": 4,
+            "phase": "group",
+            "group_id": 13,
+            "group_name": "A",
+            "slot_index": null,
+            "team_a_id": 16,
+            "team_b_id": 28,
+            "sets_a": 0,
+            "sets_b": 2,
+            "played_date": "2018-07-01",
+            "game_time": null,
+            "slot_minutes": 90,
+            "winner_team_id": 28,
+            "placeholder_a": null,
+            "placeholder_b": null,
+            "updated_at": "2026-09-15 16:32:52"
+        },
+        {
+            "id": 144,
+            "season_id": 4,
+            "phase": "group",
+            "group_id": 13,
+            "group_name": "A",
+            "slot_index": null,
+            "team_a_id": 4,
+            "team_b_id": 28,
+            "sets_a": 1,
+            "sets_b": 2,
+            "played_date": "2018-07-07",
+            "game_time": null,
+            "slot_minutes": 90,
+            "winner_team_id": 28,
+            "placeholder_a": null,
+            "placeholder_b": null,
+            "updated_at": "2026-09-15 16:58:28"
+        },
+        {
+            "id": 132,
+            "season_id": 4,
+            "phase": "qf",
+            "group_id": null,
+            "group_name": null,
+            "slot_index": 2,
+            "team_a_id": 28,
+            "team_b_id": 11,
+            "sets_a": 0,
+            "sets_b": 2,
+            "played_date": null,
+            "game_time": null,
+            "slot_minutes": 180,
+            "winner_team_id": 11,
+            "placeholder_a": null,
+            "placeholder_b": null,
+            "updated_at": "2026-10-18 19:40:07"
+        }
+    ],
+    "opponents": [
+        {
+            "id": 30,
+            "name": "Bruno & Werni",
+            "player1": "Bruno",
+            "player2": "Werni",
+            "color_hex": "#e4b48b",
+            "photo_url": null,
+            "group_id": null
+        },
+        {
+            "id": 29,
+            "name": "Erika & Christine",
+            "player1": "Erika",
+            "player2": "Christine",
+            "color_hex": "#9a8be4",
+            "photo_url": null,
+            "group_id": null
+        },
+        {
+            "id": 16,
+            "name": "Andrea & Armin",
+            "player1": "Andrea",
+            "player2": "Armin",
+            "color_hex": "#e48b9e",
+            "photo_url": null,
+            "group_id": null
+        },
+        {
+            "id": 4,
+            "name": "J\u00f6ggu & Puppe",
+            "player1": "J\u00f6ggu",
+            "player2": "Puppe",
+            "color_hex": "#e48bce",
+            "photo_url": null,
+            "group_id": null
+        },
+        {
+            "id": 11,
+            "name": "Tub\u00e4 & Wurm",
+            "player1": "Tub\u00e4",
+            "player2": "Wurm",
+            "color_hex": "#e4d98b",
+            "photo_url": null,
+            "group_id": null
+        }
+    ]
+}

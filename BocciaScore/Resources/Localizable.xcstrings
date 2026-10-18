@@ -1,0 +1,1356 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "%@ · Gruppe %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · Group %2$@"
+          }
+        }
+      }
+    },
+    "%@ %lld zu %lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld to %3$lld %4$@"
+          }
+        }
+      }
+    },
+    "%@ gewinnt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ wins"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld : %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld : %2$lld"
+          }
+        }
+      }
+    },
+    "%lld von %lld Ziffern eingegeben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld digits entered"
+          }
+        }
+      }
+    },
+    "%lld:%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld:%2$lld"
+          }
+        }
+      }
+    },
+    "+%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld"
+          }
+        }
+      }
+    },
+    "1:1 nur für ein unterbrochenes Gruppenspiel, z. B. wegen Regen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1:1 only for an interrupted group game, e.g. because of rain."
+          }
+        }
+      }
+    },
+    "Abbrechen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Abmelden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log Out"
+          }
+        }
+      }
+    },
+    "Angemeldet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logged in"
+          }
+        }
+      }
+    },
+    "Anmelden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log In"
+          }
+        }
+      }
+    },
+    "Archiv – diese Saison ist abgeschlossen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archive – this season is finished"
+          }
+        }
+      }
+    },
+    "Beendet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Final"
+          }
+        }
+      }
+    },
+    "Beteiligte Teams können den Termin in der App oder auf der Website festlegen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The teams playing can set the date in the app or on the website."
+          }
+        }
+      }
+    },
+    "Boccia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boccia"
+          }
+        }
+      }
+    },
+    "Datum" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        }
+      }
+    },
+    "Deine Anmeldung ist abgelaufen. Bitte melde dich erneut an." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your login has expired. Please log in again."
+          }
+        }
+      }
+    },
+    "Demnächst" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming"
+          }
+        }
+      }
+    },
+    "Diese Saison ist archiviert und kann nicht mehr bearbeitet werden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This season is archived and can no longer be edited."
+          }
+        }
+      }
+    },
+    "Dieser Server unterstützt die App noch nicht." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This server doesn’t support the app yet."
+          }
+        }
+      }
+    },
+    "Ein Unentschieden ist nur in der Gruppenphase möglich." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A draw is only possible in the group phase."
+          }
+        }
+      }
+    },
+    "Einstellungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Entwicklung (DEV)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Development (DEV)"
+          }
+        }
+      }
+    },
+    "Erneut versuchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        }
+      }
+    },
+    "Es läuft gerade keine Saison." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No season is running right now."
+          }
+        }
+      }
+    },
+    "Es läuft gerade keine Saison. Anmelden ist nur während einer laufenden Saison nötig." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No season is running right now. Logging in is only needed during a season."
+          }
+        }
+      }
+    },
+    "F" : {
+      "comment" : "Phase bar: final",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "F"
+          }
+        }
+      }
+    },
+    "Falscher PIN. Bitte versuche es nochmals." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wrong PIN. Please try again."
+          }
+        }
+      }
+    },
+    "Final" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Final"
+          }
+        }
+      }
+    },
+    "Für dieses Spiel steht der Gegner noch nicht fest." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The opponent for this game isn’t known yet."
+          }
+        }
+      }
+    },
+    "ganztags" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "all day"
+          }
+        }
+      }
+    },
+    "Ganztags" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All day"
+          }
+        }
+      }
+    },
+    "gegen %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vs. %@"
+          }
+        }
+      }
+    },
+    "Gegner noch offen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opponent not yet known"
+          }
+        }
+      }
+    },
+    "Gespielt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Played"
+          }
+        }
+      }
+    },
+    "Gespielt am" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Played On"
+          }
+        }
+      }
+    },
+    "GP" : {
+      "comment" : "Phase bar: group phase",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GS"
+          }
+        }
+      }
+    },
+    "Gruppe %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group %@"
+          }
+        }
+      }
+    },
+    "Gruppenphase" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Phase"
+          }
+        }
+      }
+    },
+    "Halbfinal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Semi-final"
+          }
+        }
+      }
+    },
+    "Heute" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "Heute finden keine Spiele statt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No games today."
+          }
+        }
+      }
+    },
+    "Heute, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today, %@"
+          }
+        }
+      }
+    },
+    "HF" : {
+      "comment" : "Phase bar: semi-finals",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SF"
+          }
+        }
+      }
+    },
+    "Jede Änderung wird mit dem Namen deines Teams protokolliert." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every change is logged with your team’s name."
+          }
+        }
+      }
+    },
+    "Kalender abonnieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscribe to Calendar"
+          }
+        }
+      }
+    },
+    "Keine geplanten Spiele." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No scheduled games."
+          }
+        }
+      }
+    },
+    "Keine offenen Spiele." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No open games."
+          }
+        }
+      }
+    },
+    "Keine Spiele in dieser Saison." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No games this season."
+          }
+        }
+      }
+    },
+    "Keine Verbindung zum Server. Bitte prüfe deine Internetverbindung." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can’t reach the server. Please check your internet connection."
+          }
+        }
+      }
+    },
+    "Lokal (localhost:8090)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local (localhost:8090)"
+          }
+        }
+      }
+    },
+    "Löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Mein Team" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Team"
+          }
+        }
+      }
+    },
+    "N" : {
+      "comment" : "Abbreviation: lost\nBadge: lost",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L"
+          }
+        }
+      }
+    },
+    "Nicht gefunden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not found."
+          }
+        }
+      }
+    },
+    "Niederlagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Losses"
+          }
+        }
+      }
+    },
+    "Noch keine Resultate." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No results yet."
+          }
+        }
+      }
+    },
+    "Noch keine Spiele." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No games yet."
+          }
+        }
+      }
+    },
+    "Noch keine Teams." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No teams yet."
+          }
+        }
+      }
+    },
+    "Noch nicht festgelegt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not set yet"
+          }
+        }
+      }
+    },
+    "noch offen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "not set yet"
+          }
+        }
+      }
+    },
+    "Noch ohne Termin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Yet Scheduled"
+          }
+        }
+      }
+    },
+    "Nur die beiden beteiligten Teams können dieses Spiel bearbeiten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only the two teams playing can edit this game."
+          }
+        }
+      }
+    },
+    "Nur in Entwicklungs-Builds sichtbar. Die Anmeldung gilt jeweils pro Server." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only visible in development builds. Logins are per server."
+          }
+        }
+      }
+    },
+    "Nur meine Spiele" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only My Games"
+          }
+        }
+      }
+    },
+    "offen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "open"
+          }
+        }
+      }
+    },
+    "Offene Spiele" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Games"
+          }
+        }
+      }
+    },
+    "Ohne Uhrzeit erscheint das Spiel als ganztägiger Termin im Kalender." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without a time, the game shows up as an all-day event in the calendar."
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "PIN eingeben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter PIN"
+          }
+        }
+      }
+    },
+    "PKT" : {
+      "comment" : "Abbreviation: points",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PTS"
+          }
+        }
+      }
+    },
+    "Produktiv" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Production"
+          }
+        }
+      }
+    },
+    "qualifiziert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "qualified"
+          }
+        }
+      }
+    },
+    "Rang %lld, %@, %lld Punkte, %lld Siege, %lld Niederlagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rank %1$lld, %2$@, %3$lld points, %4$lld wins, %5$lld losses"
+          }
+        }
+      }
+    },
+    "Rangliste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Final Standings"
+          }
+        }
+      }
+    },
+    "Resultat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Result"
+          }
+        }
+      }
+    },
+    "Resultat (Sätze) · %@ – %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Result (Sets) · %1$@ – %2$@"
+          }
+        }
+      }
+    },
+    "Resultat %lld zu %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Result %1$lld to %2$lld"
+          }
+        }
+      }
+    },
+    "Resultat eintragen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter Result"
+          }
+        }
+      }
+    },
+    "Resultat korrigieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct Result"
+          }
+        }
+      }
+    },
+    "Runde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round"
+          }
+        }
+      }
+    },
+    "S" : {
+      "comment" : "Abbreviation: won\nBadge: won",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W"
+          }
+        }
+      }
+    },
+    "Saison" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Season"
+          }
+        }
+      }
+    },
+    "Saison wählen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Season"
+          }
+        }
+      }
+    },
+    "Saisons, Teams und den Turnierbaum verwalten Admins weiterhin auf der Website." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Admins still manage seasons, teams and the tournament tree on the website."
+          }
+        }
+      }
+    },
+    "Schliessen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "SD" : {
+      "comment" : "Abbreviation: set difference",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SD"
+          }
+        }
+      }
+    },
+    "Server" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
+        }
+      }
+    },
+    "Siege" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wins"
+          }
+        }
+      }
+    },
+    "Sieger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winner"
+          }
+        }
+      }
+    },
+    "Sieger %@ %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winner %1$@ %2$lld"
+          }
+        }
+      }
+    },
+    "Sieger Gruppe %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winner Group %@"
+          }
+        }
+      }
+    },
+    "SP" : {
+      "comment" : "Abbreviation: games played",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GP"
+          }
+        }
+      }
+    },
+    "Speichern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Spiel nicht gefunden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Not Found"
+          }
+        }
+      }
+    },
+    "Spiel um Platz 3" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Third-Place Game"
+          }
+        }
+      }
+    },
+    "Spielplan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
+          }
+        }
+      }
+    },
+    "Spielregeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules"
+          }
+        }
+      }
+    },
+    "Spielst du in diesem Spiel? Melde dich unter „Mein Team“ mit dem PIN deines Teams an, um das Resultat einzutragen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playing in this game? Log in under “My Team” with your team’s PIN to enter the result."
+          }
+        }
+      }
+    },
+    "Team" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team"
+          }
+        }
+      }
+    },
+    "Team konnte nicht geladen werden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn’t Load Team"
+          }
+        }
+      }
+    },
+    "Termin ändern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Date"
+          }
+        }
+      }
+    },
+    "Termin festlegen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Date"
+          }
+        }
+      }
+    },
+    "Terminüberschneidung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule Conflict"
+          }
+        }
+      }
+    },
+    "Tippe auf dein Team und gib euren 4-stelligen PIN ein. Danach könnt ihr Resultate und Termine eurer Spiele eintragen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap your team and enter its 4-digit PIN. You can then enter results and dates for your games."
+          }
+        }
+      }
+    },
+    "Tippe auf ein Spiel, um das Resultat oder den Termin einzutragen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a game to enter its result or date."
+          }
+        }
+      }
+    },
+    "Trotzdem speichern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Anyway"
+          }
+        }
+      }
+    },
+    "Turnierbaum" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bracket"
+          }
+        }
+      }
+    },
+    "Turniersieger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Champion"
+          }
+        }
+      }
+    },
+    "U" : {
+      "comment" : "Abbreviation: drawn\nBadge: draw",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "D"
+          }
+        }
+      }
+    },
+    "Übersicht" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overview"
+          }
+        }
+      }
+    },
+    "Uhrzeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "Unentschieden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Draws"
+          }
+        }
+      }
+    },
+    "Unerwartete Antwort vom Server." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unexpected response from the server."
+          }
+        }
+      }
+    },
+    "Ungültige Uhrzeit." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid time."
+          }
+        }
+      }
+    },
+    "Ungültiges Datum." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid date."
+          }
+        }
+      }
+    },
+    "Ungültiges Resultat. Erlaubt sind 2:0, 2:1, 1:2, 0:2 und 1:1." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid result. Allowed are 2:0, 2:1, 1:2, 0:2 and 1:1."
+          }
+        }
+      }
+    },
+    "Unterbrochen – je 1 Punkt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interrupted – 1 point each"
+          }
+        }
+      }
+    },
+    "Unterbrochenes Spiel – beide Teams erhalten einen Punkt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interrupted game – both teams get one point."
+          }
+        }
+      }
+    },
+    "Verlierer %@ %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loser %1$@ %2$lld"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "VF" : {
+      "comment" : "Phase bar: quarter-finals",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QF"
+          }
+        }
+      }
+    },
+    "Viertelfinal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quarter-final"
+          }
+        }
+      }
+    },
+    "Website öffnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Website"
+          }
+        }
+      }
+    },
+    "Zeigt Details zum Spiel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the game’s details"
+          }
+        }
+      }
+    },
+    "Zeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "Zu dieser Zeit ist bereits ein anderes Spiel geplant:" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Another game is already scheduled at this time:"
+          }
+        }
+      }
+    },
+    "Zu dieser Zeit ist bereits ein anderes Spiel geplant." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Another game is already scheduled at this time."
+          }
+        }
+      }
+    },
+    "Zu viele Fehlversuche. Bitte versuche es in 15 Minuten erneut." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many failed attempts. Please try again in 15 minutes."
+          }
+        }
+      }
+    },
+    "Zuletzt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent"
+          }
+        }
+      }
+    },
+    "Zuletzt aktualisiert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Updated"
+          }
+        }
+      }
+    },
+    "Zweiter Gruppe %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runner-up Group %@"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
