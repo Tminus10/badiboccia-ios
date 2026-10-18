@@ -199,6 +199,26 @@ final class AppModel {
         try? await loadSeason(id: game.seasonId)
     }
 
+    // MARK: - Team photo
+
+    /// Uploads a new photo for the logged-in team, then reloads so every avatar shows it
+    /// (the photo URL carries a version, so cached images of the old photo aren't reused).
+    func uploadPhoto(_ image: UIImage) async throws {
+        guard let teamID = session?.team.id else {
+            throw APIError(code: "unauthorized", status: 401, serverMessage: nil)
+        }
+        guard let jpeg = image.squareJPEG(side: 1000) else {
+            throw APIError(code: "invalid_photo", status: nil, serverMessage: nil)
+        }
+        let team = try await authorized { try await self.client.uploadPhoto(teamID: teamID, jpeg: jpeg, token: $0) }
+        if let token = session?.token {
+            let updated = TeamSession(token: token, team: team)
+            session = updated
+            SessionStore.save(updated, for: server)
+        }
+        await refresh()
+    }
+
     /// Runs a call with the session token; a rejected token logs the team out.
     @discardableResult
     private func authorized<T>(_ call: (String) async throws -> T) async throws -> T {
@@ -219,5 +239,27 @@ extension JSONEncoder {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         return encoder
+    }
+}
+
+extension UIImage {
+    /// Center-cropped square JPEG, at most `side` points wide. Drawing also bakes in the photo's
+    /// orientation and converts HEIC, which the website can't read.
+    func squareJPEG(side: CGFloat, quality: CGFloat = 0.85) -> Data? {
+        let crop = min(size.width, size.height)
+        guard crop > 0 else { return nil }
+        let target = min(side, crop)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: target, height: target), format: format)
+        let scale = target / crop
+        return renderer.jpegData(withCompressionQuality: quality) { _ in
+            draw(in: CGRect(
+                x: -(size.width - crop) / 2 * scale,
+                y: -(size.height - crop) / 2 * scale,
+                width: size.width * scale,
+                height: size.height * scale
+            ))
+        }
     }
 }

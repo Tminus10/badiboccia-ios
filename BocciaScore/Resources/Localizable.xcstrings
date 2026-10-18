@@ -171,6 +171,16 @@
         }
       }
     },
+    "Das Foto konnte nicht verarbeitet werden. Bitte wähle ein anderes Bild." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The photo couldn't be processed. Please choose a different picture."
+          }
+        }
+      }
+    },
     "Datum" : {
       "localizations" : {
         "en" : {
@@ -217,6 +227,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This server doesn’t support the app yet."
+          }
+        }
+      }
+    },
+    "Du kannst nur das Foto deines eigenen Teams ändern." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can only change your own team's photo."
           }
         }
       }
@@ -308,6 +328,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Final"
+          }
+        }
+      }
+    },
+    "Foto hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Photo"
+          }
+        }
+      }
+    },
+    "Foto nicht gespeichert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo Not Saved"
+          }
+        }
+      }
+    },
+    "Foto wird hochgeladen …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uploading photo …"
+          }
+        }
+      }
+    },
+    "Foto ändern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Photo"
           }
         }
       }

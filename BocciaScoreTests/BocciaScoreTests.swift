@@ -1,6 +1,7 @@
 import CoreGraphics
 import Foundation
 import Testing
+import UIKit
 @testable import BocciaScore
 
 /// Real /api/v1 responses captured from the website's local dev server.
@@ -143,5 +144,18 @@ struct BracketLayoutTests {
         #expect(BracketLayout.visibleColumns(forWidth: 402, total: 4) == 2)
         #expect(BracketLayout.visibleColumns(forWidth: 834, total: 4) == 3)
         #expect(BracketLayout.visibleColumns(forWidth: 1366, total: 4) == 4)
+    }
+}
+
+@Suite("Team photo upload")
+struct TeamPhotoTests {
+    @Test func photoIsCroppedToASquareAndDownscaled() throws {
+        let landscape = UIGraphicsImageRenderer(size: CGSize(width: 3000, height: 2000)).image { context in
+            UIColor.red.setFill()
+            context.fill(CGRect(x: 0, y: 0, width: 3000, height: 2000))
+        }
+        let jpeg = try #require(landscape.squareJPEG(side: 1000))
+        let decoded = try #require(UIImage(data: jpeg))
+        #expect(decoded.size == CGSize(width: 1000, height: 1000))
     }
 }

@@ -256,6 +256,7 @@ private struct LoggedInView: View {
                     }
                     .padding(.vertical, 6)
                 }
+                TeamPhotoPicker(team: team)
             }
             .listRowBackground(Theme.card)
 

@@ -72,6 +72,8 @@ struct APIError: LocalizedError, Sendable {
         case "invalid_time": String(localized: "Ungültige Uhrzeit.")
         case "not_found": String(localized: "Nicht gefunden.")
         case "no_current_season": String(localized: "Es läuft gerade keine Saison.")
+        case "not_own_team": String(localized: "Du kannst nur das Foto deines eigenen Teams ändern.")
+        case "invalid_photo": String(localized: "Das Foto konnte nicht verarbeitet werden. Bitte wähle ein anderes Bild.")
         case "schedule_conflict": String(localized: "Zu dieser Zeit ist bereits ein anderes Spiel geplant.")
         case Self.networkCode: String(localized: "Keine Verbindung zum Server. Bitte prüfe deine Internetverbindung.")
         case Self.notSupportedCode: String(localized: "Dieser Server unterstützt die App noch nicht.")
@@ -130,6 +132,23 @@ struct APIClient: Sendable {
 
     func schedule(gameID: Int, _ body: ScheduleRequest, token: String) async throws -> Game {
         try await (post("games/\(gameID)/schedule", body: body, token: token) as GameResponse).game
+    }
+
+    /// Replaces the team's photo; `jpeg` should already be square (the server crops to the center).
+    func uploadPhoto(teamID: Int, jpeg: Data, token: String) async throws -> Team {
+        let boundary = "Boundary-\(UUID().uuidString)"
+        var body = Data()
+        body.append(Data("--\(boundary)\r\n".utf8))
+        body.append(Data("Content-Disposition: form-data; name=\"photo\"; filename=\"photo.jpg\"\r\n".utf8))
+        body.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
+        body.append(jpeg)
+        body.append(Data("\r\n--\(boundary)--\r\n".utf8))
+
+        var request = request(path: "teams/\(teamID)/photo", method: "POST", token: token)
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+        request.timeoutInterval = 60
+        return try decodeBody(MeResponse.self, from: try await send(request)).team
     }
 
     // MARK: Plumbing

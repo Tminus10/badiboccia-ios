@@ -66,6 +66,9 @@ struct TeamDetailView: View {
                         Text(subtitle)
                             .foregroundStyle(Theme.secondaryText)
                     }
+                    if model.session?.team.id == detail.team.id {
+                        TeamPhotoPicker(team: detail.team) { await load() }
+                    }
                     record(games)
                         .padding(.top, 6)
                 }
