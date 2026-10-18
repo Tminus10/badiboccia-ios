@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
-		B0CC1A000000000000000022 /* PBXContainerItemProxy */ = {
+		B0CC1A000000000000000020 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B0CC1A000000000000000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B0CC1A000000000000000010;
 			remoteInfo = BocciaScore;
 		};
-		B0CC1A000000000000000020 /* PBXContainerItemProxy */ = {
+		B0CC1A000000000000000022 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B0CC1A000000000000000001 /* Project object */;
 			proxyType = 1;
@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B0CC1A000000000000000071 /* BocciaScoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BocciaScoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CC1A000000000000000011 /* BocciaScore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BocciaScore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CC1A000000000000000031 /* BocciaScoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BocciaScoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0CC1A000000000000000071 /* BocciaScoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BocciaScoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -40,11 +40,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B0CC1A000000000000000072 /* BocciaScoreUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BocciaScoreUITests;
-			sourceTree = "<group>";
-		};
 		B0CC1A000000000000000012 /* BocciaScore */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -58,16 +53,14 @@
 			path = BocciaScoreTests;
 			sourceTree = "<group>";
 		};
+		B0CC1A000000000000000072 /* BocciaScoreUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BocciaScoreUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B0CC1A000000000000000073 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B0CC1A000000000000000013 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -76,6 +69,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B0CC1A000000000000000033 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0CC1A000000000000000073 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -108,29 +108,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B0CC1A000000000000000070 /* BocciaScoreUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B0CC1A000000000000000080 /* Build configuration list for PBXNativeTarget "BocciaScoreUITests" */;
-			buildPhases = (
-				B0CC1A000000000000000074 /* Sources */,
-				B0CC1A000000000000000073 /* Frameworks */,
-				B0CC1A000000000000000075 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B0CC1A000000000000000023 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				B0CC1A000000000000000072 /* BocciaScoreUITests */,
-			);
-			name = BocciaScoreUITests;
-			packageProductDependencies = (
-			);
-			productName = BocciaScoreUITests;
-			productReference = B0CC1A000000000000000071 /* BocciaScoreUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		B0CC1A000000000000000010 /* BocciaScore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B0CC1A000000000000000040 /* Build configuration list for PBXNativeTarget "BocciaScore" */;
@@ -175,6 +152,29 @@
 			productName = BocciaScoreTests;
 			productReference = B0CC1A000000000000000031 /* BocciaScoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B0CC1A000000000000000070 /* BocciaScoreUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0CC1A000000000000000080 /* Build configuration list for PBXNativeTarget "BocciaScoreUITests" */;
+			buildPhases = (
+				B0CC1A000000000000000074 /* Sources */,
+				B0CC1A000000000000000073 /* Frameworks */,
+				B0CC1A000000000000000075 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B0CC1A000000000000000023 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B0CC1A000000000000000072 /* BocciaScoreUITests */,
+			);
+			name = BocciaScoreUITests;
+			packageProductDependencies = (
+			);
+			productName = BocciaScoreUITests;
+			productReference = B0CC1A000000000000000071 /* BocciaScoreUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -222,13 +222,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B0CC1A000000000000000075 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B0CC1A000000000000000015 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -243,16 +236,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		B0CC1A000000000000000074 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+		B0CC1A000000000000000075 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
 		B0CC1A000000000000000014 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -267,56 +260,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0CC1A000000000000000074 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B0CC1A000000000000000023 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B0CC1A000000000000000010 /* BocciaScore */;
-			targetProxy = B0CC1A000000000000000022 /* PBXContainerItemProxy */;
-		};
 		B0CC1A000000000000000021 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B0CC1A000000000000000010 /* BocciaScore */;
 			targetProxy = B0CC1A000000000000000020 /* PBXContainerItemProxy */;
 		};
+		B0CC1A000000000000000023 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0CC1A000000000000000010 /* BocciaScore */;
+			targetProxy = B0CC1A000000000000000022 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		B0CC1A000000000000000081 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swiss.reutener.boccia.uitests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = BocciaScore;
-			};
-			name = Debug;
-		};
-		B0CC1A000000000000000082 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swiss.reutener.boccia.uitests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = BocciaScore;
-			};
-			name = Release;
-		};
 		B0CC1A000000000000000005 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -387,7 +353,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S4C2KXGW2C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BocciaScore/Resources/Info.plist;
@@ -420,7 +386,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S4C2KXGW2C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BocciaScore/Resources/Info.plist;
@@ -482,18 +448,43 @@
 			};
 			name = Release;
 		};
+		B0CC1A000000000000000081 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = swiss.reutener.boccia.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BocciaScore;
+			};
+			name = Debug;
+		};
+		B0CC1A000000000000000082 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = swiss.reutener.boccia.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BocciaScore;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B0CC1A000000000000000080 /* Build configuration list for PBXNativeTarget "BocciaScoreUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B0CC1A000000000000000081 /* Debug */,
-				B0CC1A000000000000000082 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B0CC1A000000000000000004 /* Build configuration list for PBXProject "BocciaScore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -517,6 +508,15 @@
 			buildConfigurations = (
 				B0CC1A000000000000000061 /* Debug */,
 				B0CC1A000000000000000062 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B0CC1A000000000000000080 /* Build configuration list for PBXNativeTarget "BocciaScoreUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0CC1A000000000000000081 /* Debug */,
+				B0CC1A000000000000000082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
