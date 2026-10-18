@@ -57,8 +57,7 @@ struct ResultEntryView: View {
                         .environment(\.timeZone, SwissTime.timeZone)
                     Toggle("Uhrzeit", isOn: $hasTime.animation())
                     if hasTime {
-                        DatePicker("Uhrzeit", selection: $time, displayedComponents: .hourAndMinute)
-                            .environment(\.timeZone, SwissTime.timeZone)
+                        QuarterHourTimePicker(title: "Uhrzeit", selection: $time)
                     }
                 }
             }
@@ -179,8 +178,7 @@ struct ScheduleGameView: View {
                     .environment(\.timeZone, SwissTime.timeZone)
                 Toggle("Uhrzeit", isOn: $hasTime.animation())
                 if hasTime {
-                    DatePicker("Uhrzeit", selection: $time, displayedComponents: .hourAndMinute)
-                        .environment(\.timeZone, SwissTime.timeZone)
+                    QuarterHourTimePicker(title: "Uhrzeit", selection: $time)
                 }
             } footer: {
                 Text("Ohne Uhrzeit erscheint das Spiel als ganztägiger Termin im Kalender.")
