@@ -246,7 +246,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A draw is only possible in the group phase."
+            "value" : "A draw is only possible in the group stage."
           }
         }
       }
@@ -468,7 +468,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Group Phase"
+            "value" : "Group Stage"
           }
         }
       }
@@ -932,7 +932,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Admins still manage seasons, teams and the tournament tree on the website."
+            "value" : "Admins still manage seasons, teams and the bracket on the website."
           }
         }
       }

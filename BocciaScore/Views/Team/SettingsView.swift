@@ -22,13 +22,13 @@ struct SettingsView: View {
             }
 
             Section {
-                Link(destination: model.server.websiteURL) {
+                Link(destination: model.server.websitePage()) {
                     Label("Website öffnen", systemImage: "safari")
                 }
-                Link(destination: model.server.websiteURL.appending(path: "regeln")) {
+                Link(destination: model.server.websitePage("regeln")) {
                     Label("Spielregeln", systemImage: "book")
                 }
-                Link(destination: model.server.websiteURL.appending(path: "calendar")) {
+                Link(destination: model.server.websitePage("calendar")) {
                     Label("Kalender abonnieren", systemImage: "calendar.badge.plus")
                 }
             } footer: {

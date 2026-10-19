@@ -19,6 +19,13 @@ enum ServerEnvironment: String, CaseIterable, Identifiable, Codable, Sendable {
 
     var apiBaseURL: URL { websiteURL.appending(path: "api/v1") }
 
+    /// A website page in the app's language: the website switches (and stays) there via `?lang=`.
+    func websitePage(_ path: String = "") -> URL {
+        let url = path.isEmpty ? websiteURL : websiteURL.appending(path: path)
+        guard let language = Bundle.main.preferredLocalizations.first else { return url }
+        return url.appending(queryItems: [URLQueryItem(name: "lang", value: language)])
+    }
+
     var title: String {
         switch self {
         case .production: String(localized: "Produktiv")

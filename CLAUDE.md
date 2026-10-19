@@ -36,5 +36,6 @@ xcodebuild test -project BocciaScore.xcodeproj -scheme BocciaScore \
 - Look follows Apple's Sports app: dark blue gradient (`ThemeBackground`), dark cards, accent `Theme.qualifier`. App is dark-only.
 - Business rules must match the website (valid scores 2:0 2:1 1:1 1:2 0:2, draw only in group phase, only participating teams in the current season may edit).
 - **Localization**: German is the source language (Swiss German — never "ß"), English in `Resources/Localizable.xcstrings`. Every new user-facing string needs an English entry there. UI tests force German via launch args.
+- **Same wording as the website**: the website uses the same German texts as keys (`../badiboccia/lang/en.php`), and shared terms (Saison/Season, Gruppenphase/Group Stage, Turnierbaum/Bracket, Spiel/Game …) are fixed in `../badiboccia/lang/glossary.json`. Reuse the website's German text and English translation for the same message, and run `php ../badiboccia/dev/check-translations.php` after changing strings — it checks both projects. Website links go through `ServerEnvironment.websitePage(_:)` so the website opens in the app's language.
 - Tests: Swift Testing in `BocciaScoreTests` (fixtures = real API responses in `BocciaScoreTests/Fixtures`).
 - Commit messages: gitmoji format without env tag (`✨: Add …`); commit only when asked.
