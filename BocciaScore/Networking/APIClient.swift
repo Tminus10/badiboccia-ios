@@ -34,6 +34,15 @@ enum ServerEnvironment: String, CaseIterable, Identifiable, Codable, Sendable {
         }
     }
 
+    /// Short tag shown in the app while it isn't on the live site (`ServerIndicator`); nil for production.
+    var badge: String? {
+        switch self {
+        case .production: nil
+        case .development: "DEV"
+        case .local: "LOCAL"
+        }
+    }
+
     /// Release builds only offer the live site; debug builds can switch to DEV or the local dev server.
     static var selectable: [ServerEnvironment] {
         #if DEBUG

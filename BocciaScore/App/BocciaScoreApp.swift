@@ -80,10 +80,12 @@ struct RootView: View {
             }
         }
         .tabViewStyle(.sidebarAdaptable)
+        .serverIndicatorLine()
         .sheet(item: $navigator.presentedGame) { ref in
             NavigationStack {
                 GameDetailView(gameID: ref.id).appDestinations()
             }
+            .serverIndicatorLine()
             .presentationDetents([.large])
             .presentationBackground(Theme.backgroundBottom)
         }

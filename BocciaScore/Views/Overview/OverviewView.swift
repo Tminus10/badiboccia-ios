@@ -52,6 +52,8 @@ struct OverviewView: View {
             Image(systemName: "circle.hexagongrid.fill")
                 .foregroundStyle(Theme.qualifier)
             Text("Boccia")
+            ServerBadge()
+                .padding(.leading, 4)
         }
         .font(.system(size: 38, weight: .bold, design: .rounded))
         .foregroundStyle(.white)

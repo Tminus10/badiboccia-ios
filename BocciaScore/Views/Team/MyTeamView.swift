@@ -23,6 +23,7 @@ struct MyTeamView: View {
         }
         .sheet(isPresented: $showsSettings) {
             NavigationStack { SettingsView() }
+                .serverIndicatorLine()
                 .presentationBackground(Theme.backgroundBottom)
         }
     }
@@ -81,6 +82,7 @@ private struct TeamPickerView: View {
         .refreshable { await model.refresh() }
         .sheet(item: $loginTeam) { team in
             PINEntryView(team: team)
+                .serverIndicatorLine()
                 .presentationDetents([.large])
                 .presentationBackground(Theme.backgroundBottom)
         }
