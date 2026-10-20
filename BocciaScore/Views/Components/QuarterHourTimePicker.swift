@@ -10,7 +10,6 @@ struct QuarterHourTimePicker: View {
     var body: some View {
         LabeledContent(title) {
             CompactTimePicker(selection: $selection)
-                .fixedSize()
         }
     }
 }
@@ -34,6 +33,12 @@ private struct CompactTimePicker: UIViewRepresentable {
         if picker.date != selection {
             picker.date = selection
         }
+    }
+
+    /// UIDatePicker's compact style doesn't report a usable intrinsic size to SwiftUI (it collapsed to an
+    /// empty, untappable spot), so give SwiftUI the size the picker actually needs.
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView picker: UIDatePicker, context: Context) -> CGSize? {
+        picker.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
 
     func makeCoordinator() -> Coordinator { Coordinator(selection: $selection) }
