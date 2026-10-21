@@ -29,9 +29,14 @@ private struct ServerIndicatorLine: ViewModifier {
     func body(content: Content) -> some View {
         content.overlay(alignment: .top) {
             if model.server.badge != nil {
-                Theme.testServer
-                    .frame(height: 3)
-                    .ignoresSafeArea(edges: .top)
+                // A solid line with a glow fading down over the status bar: a bare thin line was easy to miss.
+                VStack(spacing: 0) {
+                    Theme.testServer
+                        .frame(height: 6)
+                    LinearGradient(colors: [Theme.testServer.opacity(0.45), .clear], startPoint: .top, endPoint: .bottom)
+                        .frame(height: 44)
+                }
+                .ignoresSafeArea(edges: .top)
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
             }
