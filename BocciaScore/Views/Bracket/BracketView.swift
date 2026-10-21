@@ -7,8 +7,10 @@ struct BracketView: View {
     @Environment(AppModel.self) private var model
     @Environment(Navigator.self) private var navigator
     @State private var focusedColumn: Int? = 0
-    /// Height of the bracket's scroll view without the tab bar, to center the semi-finals in it.
+    /// Height of the bracket's scroll view without the tab bar, to center the knockout rounds in it.
     @State private var visibleHeight: CGFloat = 0
+    /// The bracket's vertical scroll position, reset to the top when the knockout rounds get pinned.
+    @State private var verticalPosition = ScrollPosition(edge: .top)
 
     @ScaledMetric(relativeTo: .caption) private var headerHeight: CGFloat = 28
     @ScaledMetric(relativeTo: .footnote) private var rowHeight: CGFloat = 38
@@ -34,16 +36,27 @@ struct BracketView: View {
                 .padding(.horizontal, horizontalInset)
 
                 if let detail = model.selectedDetail {
+                    let focusRound = max(focus - 1, 0)
+                    // Knockout rounds are 0 (quarter-finals) to 2 (final); the phase bar counts the groups first.
+                    let visibleRounds = (focus - 1)..<(focus + visible - 1)
+                    let placement = knockoutPlacement(detail: detail, layout: layout, focusRound: focusRound,
+                                                      visibleRounds: visibleRounds,
+                                                      centerBlock: visible >= 3 || phases[focus] == .semiFinals)
+                    // Pinned, the group column reaches past the bottom padding and the tab bar (or the
+                    // home indicator) down to the edge of the display.
+                    let groupsExtension = 24 + proxy.safeAreaInsets.bottom
                     ScrollView(.vertical) {
                         ScrollView(.horizontal) {
                             HStack(alignment: .top, spacing: 0) {
                                 ForEach(Array(phases.enumerated()), id: \.offset) { index, phase in
-                                    column(phase, detail: detail, layout: layout, focusRound: max(focus - 1, 0),
-                                           centerSemiFinals: phases[focus] == .semiFinals)
+                                    column(phase, detail: detail, layout: layout, focusRound: focusRound, placement: placement,
+                                           groupsExtension: groupsExtension)
                                         .frame(width: columnWidth, alignment: .topLeading)
                                         .id(index)
                                 }
                             }
+                            // Pinned, the bracket is exactly one screen high, whatever the rounds out of view need.
+                            .frame(height: placement.isPinned ? availableHeight + groupsExtension : nil, alignment: .top)
                             .scrollTargetLayout()
                             .animation(.smooth(duration: 0.35), value: focus)
                         }
@@ -54,10 +67,22 @@ struct BracketView: View {
                         .scrollDisabled(maxFocus == 0)
                         .padding(.bottom, 24)
                     }
+                    // The scroll view already ends at the top of the tab bar; its bottom content inset is the
+                    // tab bar again (content may scroll on behind it), so it doesn't count against the height.
                     .onScrollGeometryChange(for: CGFloat.self) { geometry in
-                        geometry.containerSize.height - geometry.contentInsets.top - geometry.contentInsets.bottom
+                        geometry.containerSize.height - geometry.contentInsets.top
                     } action: { _, height in
                         visibleHeight = height
+                    }
+                    .scrollPosition($verticalPosition)
+                    // Pinned, nothing moves vertically but the group column (which also takes pull to refresh).
+                    .scrollDisabled(placement.isPinned)
+                    // Pinned rounds sit in the middle of the screen: an offset left over from
+                    // scrolling the bracket before (e.g. through the groups) would push them out of view.
+                    .onChange(of: placement.isPinned) { _, isPinned in
+                        if isPinned {
+                            withAnimation(.smooth) { verticalPosition.scrollTo(edge: .top) }
+                        }
                     }
                     .refreshable { await model.refresh() }
                 } else {
@@ -81,27 +106,74 @@ struct BracketView: View {
         }
     }
 
-    @ViewBuilder
-    private func column(_ phase: BracketPhase, detail: SeasonDetail, layout: BracketLayout, focusRound: Int,
-                        centerSemiFinals: Bool) -> some View {
-        // All knockout rounds move down together, so the connector lines still meet.
+    /// Where the knockout rounds sit vertically. All of them move down together, so the connector lines still meet.
+    private struct KnockoutPlacement {
+        var topInset: CGFloat
+        /// Height of the leftmost visible knockout round (quarter- or semi-finals), the block the later rounds hang off.
+        var blockHeight: CGFloat
+        /// The knockout rounds fit on screen: they stay put in the vertical middle and only the group column scrolls.
+        var isPinned: Bool
+    }
+
+    /// The bracket's height on screen, without the scroll view's bottom padding.
+    private var availableHeight: CGFloat { visibleHeight - 24 }
+
+    private func knockoutPlacement(detail: SeasonDetail, layout: BracketLayout, focusRound: Int,
+                                   visibleRounds: Range<Int>, centerBlock: Bool) -> KnockoutPlacement {
         let championInset = detail.podium?.championId != nil
             ? layout.inset(aboveFinal: KnockoutColumn.championHeight, focusRound: focusRound) : 0
-        // With only the semi-finals and the final in view, the semi-finals sit in the vertical middle.
-        let semiFinalsHeight = layout.height(round: 1, count: detail.bracket.sf.count, focusRound: focusRound)
-        let centeredInset = centerSemiFinals ? (visibleHeight - 24 - semiFinalsHeight) / 2 : 0
-        let topInset = max(championInset, centeredInset)
+        let blockGames = focusRound == 0 ? detail.bracket.qf.count : detail.bracket.sf.count
+        let blockHeight = layout.height(round: focusRound, count: blockGames, focusRound: focusRound)
+        // Only the rounds in view count: on iPhone, the final (with the third-place game) is off to the
+        // right next to the quarter-finals, and the quarter-finals are off to the left next to the final.
+        let heights = [
+            visibleRounds.contains(0) ? KnockoutColumn.height(round: 0, gameCount: detail.bracket.qf.count, layout: layout, focusRound: focusRound) : 0,
+            visibleRounds.contains(1) ? KnockoutColumn.height(round: 1, gameCount: detail.bracket.sf.count, layout: layout, focusRound: focusRound) : 0,
+            visibleRounds.contains(2) ? KnockoutColumn.height(round: 2, gameCount: detail.bracket.final == nil ? 0 : 1, layout: layout, focusRound: focusRound,
+                                                              hasThirdPlace: detail.bracket.third != nil, thirdPlaceBottom: blockHeight) : 0,
+        ]
+        let contentHeight = heights.max() ?? 0
+        // Centered between the phase bar and the tab bar.
+        let centeredInset = (visibleHeight - blockHeight) / 2
+
+        if visibleHeight > 0, championInset + contentHeight <= availableHeight {
+            // Centered on the leftmost round, but never pushing the third-place game out of view.
+            let inset = max(championInset, min(centeredInset, availableHeight - contentHeight))
+            return KnockoutPlacement(topInset: inset, blockHeight: blockHeight, isPinned: true)
+        }
+        // Too tall: everything scrolls together. The block is still centered where there's room
+        // (iPad, and iPhone with only the semi-finals and the final in view).
+        let inset = max(championInset, centerBlock ? centeredInset : 0)
+        return KnockoutPlacement(topInset: inset, blockHeight: blockHeight, isPinned: false)
+    }
+
+    @ViewBuilder
+    private func column(_ phase: BracketPhase, detail: SeasonDetail, layout: BracketLayout, focusRound: Int,
+                        placement: KnockoutPlacement, groupsExtension: CGFloat) -> some View {
+        let topInset = placement.topInset
         switch phase {
         case .groups:
             // No connector lines leave the group column, so it only needs a small gap.
-            GroupStageColumn(detail: detail, width: max(layout.columnWidth - 10, 0))
+            let groups = GroupStageColumn(detail: detail, width: max(layout.columnWidth - 10, 0))
+            if placement.isPinned {
+                // The knockout rounds stay put; the group tables scroll on their own, down to the edge of
+                // the display behind the tab bar, and the last group can still scroll up above it.
+                ScrollView(.vertical) { groups }
+                    .scrollIndicators(.hidden)
+                    .contentMargins(.bottom, groupsExtension, for: .scrollContent)
+                    .frame(height: availableHeight + groupsExtension)
+            } else {
+                groups
+            }
         case .quarterFinals:
             KnockoutColumn(round: 0, games: detail.bracket.qf, detail: detail, layout: layout, focusRound: focusRound, topInset: topInset)
         case .semiFinals:
             KnockoutColumn(round: 1, games: detail.bracket.sf, detail: detail, layout: layout, focusRound: focusRound, topInset: topInset)
         case .final:
             KnockoutColumn(round: 2, games: detail.bracket.final.map { [$0] } ?? [], detail: detail, layout: layout,
-                           focusRound: focusRound, topInset: topInset, thirdPlace: detail.bracket.third)
+                           focusRound: focusRound, topInset: topInset, thirdPlace: detail.bracket.third,
+                           // Pinned: down at the bottom of the screen, like on the website.
+                           thirdPlaceBottom: placement.isPinned ? availableHeight - topInset : placement.blockHeight)
         }
     }
 }
@@ -196,6 +268,9 @@ private struct KnockoutColumn: View {
     let focusRound: Int
     var topInset: CGFloat = 0
     var thirdPlace: Game? = nil
+    /// Where the third-place game's bottom edge goes when there's room below the final: the bottom of
+    /// the screen when the knockout rounds are pinned, else the bottom of the leftmost visible round.
+    var thirdPlaceBottom: CGFloat = 0
 
     /// Room for the champion badge above the final, including the gap to the card.
     static let championHeight: CGFloat = 110
@@ -233,14 +308,35 @@ private struct KnockoutColumn: View {
     }
 
     /// Space between the final and the third-place game, so the champion and the final read as one block.
-    private let thirdPlaceGap: CGFloat = 32
+    private static let thirdPlaceGap: CGFloat = 32
+
+    /// The third-place game's label and card.
+    private static func thirdPlaceHeight(_ layout: BracketLayout) -> CGFloat { 32 + layout.cardHeight }
+
+    /// At `bottom` when there's room, else just below the final.
+    private static func thirdPlaceTop(finalBottom: CGFloat, bottom: CGFloat, layout: BracketLayout) -> CGFloat {
+        max(finalBottom + thirdPlaceGap, bottom - thirdPlaceHeight(layout))
+    }
+
+    /// The column's height without the top inset; BracketView uses it to tell whether the knockout rounds fit on screen.
+    static func height(round: Int, gameCount: Int, layout: BracketLayout, focusRound: Int,
+                       hasThirdPlace: Bool = false, thirdPlaceBottom: CGFloat = 0) -> CGFloat {
+        let finalBottom = layout.height(round: round, count: gameCount, focusRound: focusRound)
+        guard hasThirdPlace else { return finalBottom }
+        return thirdPlaceTop(finalBottom: finalBottom, bottom: thirdPlaceBottom, layout: layout) + thirdPlaceHeight(layout)
+    }
 
     private var finalBottom: CGFloat {
         layout.height(round: round, count: games.count, focusRound: focusRound)
     }
 
+    private var thirdPlaceTop: CGFloat {
+        Self.thirdPlaceTop(finalBottom: finalBottom, bottom: thirdPlaceBottom, layout: layout)
+    }
+
     private var height: CGFloat {
-        thirdPlace == nil ? finalBottom : finalBottom + thirdPlaceGap + 32 + layout.cardHeight
+        Self.height(round: round, gameCount: games.count, layout: layout, focusRound: focusRound,
+                    hasThirdPlace: thirdPlace != nil, thirdPlaceBottom: thirdPlaceBottom)
     }
 
     /// "⊐" shapes joining each pair of games, plus the stub into the next round's game.
@@ -271,7 +367,7 @@ private struct KnockoutColumn: View {
                 .frame(height: 24, alignment: .bottom)
             BracketGameCard(game: game, detail: detail, layout: layout)
         }
-        .offset(y: finalBottom + thirdPlaceGap)
+        .offset(y: thirdPlaceTop)
     }
 }
 
