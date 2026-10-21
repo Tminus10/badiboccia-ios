@@ -49,11 +49,16 @@ enum Route: Hashable {
 
 extension View {
     func appDestinations() -> some View {
-        navigationDestination(for: Route.self) { route in
-            switch route {
-            case let .team(id, seasonID):
-                TeamDetailView(teamID: id, initialSeasonID: seasonID)
-            }
+        navigationDestination(for: Route.self) { $0.destination }
+    }
+}
+
+extension Route {
+    @ViewBuilder
+    var destination: some View {
+        switch self {
+        case let .team(id, seasonID):
+            TeamDetailView(teamID: id, initialSeasonID: seasonID)
         }
     }
 }

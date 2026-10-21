@@ -6,6 +6,9 @@ struct GameDetailView: View {
     let gameID: Int
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
+    /// The team tapped in the score header. Pushed from here rather than by NavigationLinks inside the
+    /// header: a List row with two links fires both on any tap (it opened both teams, right on top of left).
+    @State private var shownTeam: Route?
 
     private var detail: SeasonDetail? {
         model.details.values.first { $0.game(id: gameID) != nil }
@@ -21,6 +24,7 @@ struct GameDetailView: View {
         }
         .themedScreen()
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(item: $shownTeam) { $0.destination }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button(role: .close) { dismiss() }
@@ -34,7 +38,9 @@ struct GameDetailView: View {
         let teamB = game.teamBId.flatMap { teams[$0] }
         return List {
             Section {
-                ScoreHeader(game: game, teamA: teamA, teamB: teamB, seasonID: detail.season.id)
+                ScoreHeader(game: game, teamA: teamA, teamB: teamB) { team in
+                    shownTeam = .team(id: team.id, seasonID: detail.season.id)
+                }
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
             }
@@ -100,7 +106,7 @@ private struct ScoreHeader: View {
     let game: Game
     let teamA: Team?
     let teamB: Team?
-    let seasonID: Int
+    let openTeam: (Team) -> Void
 
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
@@ -152,12 +158,9 @@ private struct ScoreHeader: View {
         .frame(maxWidth: .infinity)
 
         if let team {
-            // A NavigationLink inside a List row would add a disclosure chevron; keep it invisible behind the content.
-            content
-                .background {
-                    NavigationLink(value: Route.team(id: team.id, seasonID: seasonID)) { EmptyView() }
-                        .opacity(0)
-                }
+            // A plain-style button only reacts to taps on itself, not on the whole List row.
+            Button { openTeam(team) } label: { content.contentShape(.rect) }
+                .buttonStyle(.plain)
         } else {
             content
         }
