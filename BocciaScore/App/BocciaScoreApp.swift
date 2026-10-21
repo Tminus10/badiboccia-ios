@@ -55,7 +55,7 @@ extension View {
 }
 
 extension Route {
-    @ViewBuilder
+    @MainActor @ViewBuilder
     var destination: some View {
         switch self {
         case let .team(id, seasonID):
