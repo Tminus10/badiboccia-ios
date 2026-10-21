@@ -86,26 +86,44 @@ struct TeamDetailView: View {
                     }
                 }
                 .listRowBackground(Theme.card)
+            } else if let enrollment {
+                Section {
+                    LabeledContent("Saison", value: enrollment.seasonLabel)
+                }
+                .listRowBackground(Theme.card)
             }
 
-            Section {
-                if games.isEmpty {
+            if games.isEmpty {
+                Section {
                     Text("Keine Spiele in dieser Saison.")
                         .foregroundStyle(Theme.secondaryText)
                 }
-                ForEach(games) { game in
-                    TeamGameRow(game: game, teamID: detail.team.id, opponent: game.opponent(of: detail.team.id).flatMap { teams[$0] })
-                }
-            } header: {
-                if let enrollment {
-                    Text("\(enrollment.seasonLabel) · Gruppe \(enrollment.groupName)")
+                .listRowBackground(Theme.card)
+            }
+            // Latest round first, like the bracket read from the final back to the group phase.
+            ForEach(Self.phaseOrder, id: \.self) { phase in
+                let phaseGames = games.filter { $0.phase == phase }.sorted { Game.chronological($1, $0) }
+                if !phaseGames.isEmpty {
+                    Section {
+                        ForEach(phaseGames) { game in
+                            TeamGameRow(game: game, teamID: detail.team.id, opponent: game.opponent(of: detail.team.id).flatMap { teams[$0] })
+                        }
+                    } header: {
+                        if phase == .group, let enrollment {
+                            Text("\(phase.title) · Gruppe \(enrollment.groupName)")
+                        } else {
+                            Text(phase.title)
+                        }
+                    }
+                    .listRowBackground(Theme.card)
                 }
             }
-            .listRowBackground(Theme.card)
         }
         .listStyle(.insetGrouped)
         .refreshable { await load() }
     }
+
+    private static let phaseOrder: [Phase] = [.final, .third, .sf, .qf, .group]
 
     private func record(_ games: [Game]) -> some View {
         let played = games.filter(\.isComplete)

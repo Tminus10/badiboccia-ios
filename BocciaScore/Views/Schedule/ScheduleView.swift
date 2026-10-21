@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// Every game of the season by day (plus the website's calendar entries such as the group draw),
-/// then the games that have no date yet. Logged-in teams can narrow it down to their own games.
+/// latest day first: the games that have no date yet, upcoming days, today, then past days.
+/// It opens at today. Logged-in teams can narrow it down to their own games.
 struct ScheduleView: View {
     @Environment(AppModel.self) private var model
     @State private var onlyMine = false
@@ -44,25 +45,11 @@ struct ScheduleView: View {
                     EmptyStateText(text: String(localized: "Noch keine Spiele."))
                         .listRowBackground(Color.clear)
                 }
-                ForEach(days, id: \.day) { day in
-                    Section {
-                        ForEach(day.events) { event in
-                            EventRow(event: event)
-                        }
-                        ForEach(day.games) { game in
-                            ScheduleRow(game: game, detail: detail)
-                        }
-                    } header: {
-                        Text(dayTitle(day.day))
-                            .foregroundStyle(day.day == SwissTime.today ? Theme.qualifier : Theme.secondaryText)
-                    }
-                    .id(day.day)
-                    .listRowBackground(Theme.card)
-                }
                 if !undated.isEmpty {
                     Section {
                         ForEach(undated) { game in
                             ScheduleRow(game: game, detail: detail)
+                                .id(RowID.game(game.id))
                         }
                     } header: {
                         Text("Noch ohne Termin")
@@ -71,11 +58,27 @@ struct ScheduleView: View {
                     }
                     .listRowBackground(Theme.card)
                 }
+                ForEach(days, id: \.day) { day in
+                    Section {
+                        ForEach(day.events) { event in
+                            EventRow(event: event)
+                                .id(RowID.event(event.id))
+                        }
+                        ForEach(day.games) { game in
+                            ScheduleRow(game: game, detail: detail)
+                                .id(RowID.game(game.id))
+                        }
+                    } header: {
+                        Text(dayTitle(day.day))
+                            .foregroundStyle(day.day == SwissTime.today ? Theme.qualifier : Theme.secondaryText)
+                    }
+                    .listRowBackground(Theme.card)
+                }
             }
             .listStyle(.insetGrouped)
             .onAppear {
-                // Start at today (or the next game day) instead of the season's first game.
-                if let target = days.first(where: { $0.day >= SwissTime.today })?.day {
+                // Start at today (or the next game day) instead of the latest day; a finished season starts at the top.
+                if let target = rowAbove(days.lastIndex { $0.day >= SwissTime.today }, days: days, undated: undated) {
                     proxy.scrollTo(target, anchor: .top)
                 }
             }
@@ -88,6 +91,20 @@ struct ScheduleView: View {
             games = games.filter { $0.involves(teamID) }
         }
         return games
+    }
+
+    private enum RowID: Hashable {
+        case game(Int), event(Int)
+    }
+
+    /// The last row above a day. Scrolling to a section only reaches its first row, which leaves
+    /// the day's header out of sight, so this scrolls to the end of the (upcoming) day above instead.
+    private func rowAbove(_ index: Int?, days: [Day], undated: [Game]) -> RowID? {
+        guard let index else { return nil }
+        guard index > 0 else { return undated.last.map { .game($0.id) } }
+        let day = days[index - 1]
+        if let game = day.games.last { return .game(game.id) }
+        return day.events.last.map { .event($0.id) }
     }
 
     private struct Day {
@@ -113,7 +130,7 @@ struct ScheduleView: View {
                 day.games.sort(by: Game.chronological)
                 return day
             }
-            .sorted { $0.day < $1.day }
+            .sorted { $0.day > $1.day }
     }
 
     private func dayTitle(_ day: String) -> String {
