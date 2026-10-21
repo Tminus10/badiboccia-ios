@@ -84,7 +84,11 @@ final class AppModel {
             if let info = await info {
                 demo = info.demoSeasonId.map { DemoInfo(seasonID: $0, pin: info.demoPin ?? "") }
             }
-            if isDemoSession, let demo, (try? await loadSeason(id: demo.seasonID)) != nil, let summary = details[demo.seasonID]?.season {
+            if isDemoSession, let demo {
+                try? await loadSeason(id: demo.seasonID)
+            }
+            // Checked again after loading: the team may have logged out in the meantime.
+            if isDemoSession, let demo, let summary = details[demo.seasonID]?.season {
                 seasons.insert(summary, at: 0)
             }
             self.seasons = seasons
