@@ -50,26 +50,7 @@ private struct TeamPickerView: View {
             .listRowBackground(Color.clear)
 
             if let detail = model.currentDetail {
-                ForEach(detail.groups) { group in
-                    Section("Gruppe \(group.name)") {
-                        ForEach(teams(in: group, detail: detail)) { team in
-                            Button {
-                                loginTeam = team
-                            } label: {
-                                HStack {
-                                    TeamLabel(team: team, avatarSize: 32)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .font(.footnote.weight(.semibold))
-                                        .foregroundStyle(Theme.tertiaryText)
-                                }
-                                .contentShape(.rect)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .listRowBackground(Theme.card)
-                }
+                TeamGroupSections(detail: detail) { loginTeam = $0 }
             } else if model.seasons.isEmpty || model.currentSeason != nil {
                 SeasonLoadingState()
                     .listRowBackground(Color.clear)
@@ -77,19 +58,115 @@ private struct TeamPickerView: View {
                 EmptyStateText(text: String(localized: "Es läuft gerade keine Saison. Anmelden ist nur während einer laufenden Saison nötig."))
                     .listRowBackground(Color.clear)
             }
+
+            if model.demo != nil {
+                Section {
+                    NavigationLink(value: Route.demoTeams) {
+                        Label("Demo ausprobieren", systemImage: "sparkles")
+                    }
+                } footer: {
+                    Text("Neugierig? Probiere die App im Demo Cup mit erfundenen Teams aus: Resultate und Termine eintragen, Fotos ändern. Jede Nacht wird alles zurückgesetzt.")
+                }
+                .listRowBackground(Theme.card)
+            }
         }
         .listStyle(.insetGrouped)
         .refreshable { await model.refresh() }
-        .sheet(item: $loginTeam) { team in
+        .loginSheet(for: $loginTeam)
+    }
+}
+
+/// "Demo ausprobieren": the demo season's made-up teams, all with the same public PIN.
+struct DemoTeamPickerView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
+    @State private var loginTeam: Team?
+    @State private var error: APIError?
+
+    var body: some View {
+        List {
+            Section {
+                VStack(alignment: .leading, spacing: 10) {
+                    Image(systemName: "sparkles")
+                        .font(.largeTitle)
+                        .foregroundStyle(Theme.demo)
+                    Text("Wähle ein Team und gib den PIN \(model.demo?.pin ?? "") ein.")
+                        .foregroundStyle(Theme.secondaryText)
+                }
+                .padding(.vertical, 8)
+            }
+            .listRowBackground(Color.clear)
+
+            if let id = model.demo?.seasonID, let detail = model.details[id] {
+                TeamGroupSections(detail: detail) { loginTeam = $0 }
+            } else if let error {
+                EmptyStateText(text: error.localizedDescription)
+                    .listRowBackground(Color.clear)
+            } else {
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+                    .listRowBackground(Color.clear)
+            }
+        }
+        .listStyle(.insetGrouped)
+        .themedScreen()
+        .navigationTitle("Demo")
+        .task {
+            do {
+                try await model.loadDemoSeason()
+            } catch let apiError as APIError {
+                error = apiError
+            } catch {}
+        }
+        // After a demo login, My Team shows the logged-in demo team underneath.
+        .onChange(of: model.isDemoSession) { _, isDemo in
+            if isDemo { dismiss() }
+        }
+        .loginSheet(for: $loginTeam)
+    }
+}
+
+/// A season's teams by group, each opening the PIN entry.
+private struct TeamGroupSections: View {
+    let detail: SeasonDetail
+    let select: (Team) -> Void
+
+    var body: some View {
+        ForEach(detail.groups) { group in
+            Section("Gruppe \(group.name)") {
+                ForEach(teams(in: group)) { team in
+                    Button {
+                        select(team)
+                    } label: {
+                        HStack {
+                            TeamLabel(team: team, avatarSize: 32)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.footnote.weight(.semibold))
+                                .foregroundStyle(Theme.tertiaryText)
+                        }
+                        .contentShape(.rect)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .listRowBackground(Theme.card)
+        }
+    }
+
+    private func teams(in group: TeamGroup) -> [Team] {
+        detail.teams.filter { $0.groupId == group.id }.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+}
+
+private extension View {
+    func loginSheet(for team: Binding<Team?>) -> some View {
+        sheet(item: team) { team in
             PINEntryView(team: team)
                 .serverIndicatorLine()
                 .presentationDetents([.large])
                 .presentationBackground(Theme.backgroundBottom)
         }
-    }
-
-    private func teams(in group: TeamGroup, detail: SeasonDetail) -> [Team] {
-        detail.teams.filter { $0.groupId == group.id }.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
     }
 }
 

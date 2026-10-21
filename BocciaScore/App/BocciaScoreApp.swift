@@ -45,6 +45,7 @@ enum AppTab: String, Hashable {
 /// Pushed screens, shared by every tab's NavigationStack.
 enum Route: Hashable {
     case team(id: Int, seasonID: Int?)
+    case demoTeams
 }
 
 extension View {
@@ -59,6 +60,8 @@ extension Route {
         switch self {
         case let .team(id, seasonID):
             TeamDetailView(teamID: id, initialSeasonID: seasonID)
+        case .demoTeams:
+            DemoTeamPickerView()
         }
     }
 }

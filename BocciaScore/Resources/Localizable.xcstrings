@@ -211,6 +211,36 @@
         }
       }
     },
+    "Demo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demo"
+          }
+        }
+      }
+    },
+    "Demo ausprobieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try the Demo"
+          }
+        }
+      }
+    },
+    "Demo-Modus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demo Mode"
+          }
+        }
+      }
+    },
     "Diese Saison ist archiviert und kann nicht mehr bearbeitet werden." : {
       "localizations" : {
         "en" : {
@@ -621,6 +651,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "L"
+          }
+        }
+      }
+    },
+    "Neugierig? Probiere die App im Demo Cup mit erfundenen Teams aus: Resultate und Termine eintragen, Fotos ändern. Jede Nacht wird alles zurückgesetzt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Curious? Try the app in the Demo Cup with made-up teams: enter results and dates, change photos. Everything is reset every night."
           }
         }
       }
@@ -1186,6 +1226,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "D"
+          }
+        }
+      }
+    },
+    "Wähle ein Team und gib den PIN %@ ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a team and enter the PIN %@."
           }
         }
       }

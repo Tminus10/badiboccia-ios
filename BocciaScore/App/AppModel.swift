@@ -13,6 +13,8 @@ final class AppModel {
     private(set) var isLoading = false
     private(set) var lastError: APIError?
     private(set) var lastUpdated: Date?
+    /// The server's demo season and its public PIN ("Demo ausprobieren"); nil while unknown or if there's none.
+    private(set) var demo: DemoInfo?
 
     /// The season shown in all tabs; nil until the season list has loaded.
     var selectedSeasonID: Int? {
@@ -48,7 +50,14 @@ final class AppModel {
 
     // MARK: - Derived state
 
-    var currentSeason: SeasonSummary? { seasons.first(where: \.isCurrent) }
+    /// A demo team plays in the demo season, which isn't part of the league's season list: while
+    /// one is logged in, `seasons` also holds the demo season and it stands in for the current one.
+    var isDemoSession: Bool { session?.team.isDemo == true }
+
+    /// The season the user plays in: the running season, or the demo season in a demo session.
+    var currentSeason: SeasonSummary? {
+        isDemoSession ? seasons.first { $0.isDemo == true } : seasons.first(where: \.isCurrent)
+    }
 
     var selectedSeason: SeasonSummary? { seasons.first { $0.id == selectedSeasonID } }
 
@@ -58,8 +67,9 @@ final class AppModel {
 
     /// Whether the logged-in team may enter a result or a date for this game (same rules as the website).
     func canEdit(_ game: Game) -> Bool {
-        guard let session, game.hasBothTeams, game.involves(session.team.id) else { return false }
-        return seasons.first { $0.id == game.seasonId }?.isCurrent ?? false
+        guard let session, game.hasBothTeams, game.involves(session.team.id),
+              let season = seasons.first(where: { $0.id == game.seasonId }) else { return false }
+        return season.isCurrent || season.isDemo == true
     }
 
     // MARK: - Loading
@@ -69,14 +79,21 @@ final class AppModel {
         isLoading = true
         defer { isLoading = false }
         do {
-            let seasons = try await client.seasons()
+            async let info = try? client.info()
+            var seasons = try await client.seasons()
+            if let info = await info {
+                demo = info.demoSeasonId.map { DemoInfo(seasonID: $0, pin: info.demoPin ?? "") }
+            }
+            if isDemoSession, let demo, (try? await loadSeason(id: demo.seasonID)) != nil, let summary = details[demo.seasonID]?.season {
+                seasons.insert(summary, at: 0)
+            }
             self.seasons = seasons
             if let data = try? JSONEncoder.snakeCase.encode(SeasonsResponse(seasons: seasons)) {
                 ResponseCache.write(data, key: "seasons", server: server)
             }
             if selectedSeasonID == nil || !seasons.contains(where: { $0.id == selectedSeasonID }) {
                 // didSet loads the newly selected season.
-                selectedSeasonID = (seasons.first(where: \.isCurrent) ?? seasons.first)?.id
+                selectedSeasonID = (currentSeason ?? seasons.first)?.id
             } else {
                 await loadSelectedSeason()
             }
@@ -111,10 +128,16 @@ final class AppModel {
         try await client.team(id: id)
     }
 
+    /// Loads the demo season's teams for "Demo ausprobieren".
+    func loadDemoSeason() async throws {
+        guard let demo else { return }
+        try await loadSeason(id: demo.seasonID)
+    }
+
     private func loadCache() {
         if let data = ResponseCache.read("seasons", server: server),
            let cached = try? APIClient.decode(SeasonsResponse.self, from: data) {
-            seasons = cached.seasons
+            seasons = isDemoSession ? cached.seasons : cached.seasons.filter { $0.isDemo != true }
         }
         for season in seasons {
             if let data = ResponseCache.read("season-\(season.id)", server: server),
@@ -146,6 +169,10 @@ final class AppModel {
         let session = TeamSession(token: response.token, team: response.team)
         self.session = session
         SessionStore.save(session, for: server)
+        if isDemoSession {
+            await refresh()
+            selectedSeasonID = currentSeason?.id
+        }
     }
 
     func logout() async {
@@ -171,8 +198,15 @@ final class AppModel {
     }
 
     private func endSession() {
+        let wasDemo = isDemoSession
         session = nil
         SessionStore.save(nil, for: server)
+        if wasDemo {
+            seasons.removeAll { $0.isDemo == true }
+            if selectedSeason == nil {
+                selectedSeasonID = (currentSeason ?? seasons.first)?.id
+            }
+        }
     }
 
     // MARK: - Result entry
@@ -232,6 +266,11 @@ final class AppModel {
             throw error
         }
     }
+}
+
+struct DemoInfo: Equatable, Sendable {
+    let seasonID: Int
+    let pin: String
 }
 
 extension JSONEncoder {

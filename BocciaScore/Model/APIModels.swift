@@ -8,6 +8,8 @@ struct SeasonSummary: Codable, Identifiable, Hashable, Sendable {
     let label: String
     let year: Int
     let isCurrent: Bool
+    /// The demo season (badiboccia: scripts/seed-demo.php). Optional so caches and servers from before it still decode.
+    var isDemo: Bool? = nil
 }
 
 struct Team: Codable, Identifiable, Hashable, Sendable {
@@ -19,6 +21,8 @@ struct Team: Codable, Identifiable, Hashable, Sendable {
     let photoUrl: URL?
     /// The team's group in the season it was loaded for; nil outside a season context.
     let groupId: Int?
+    /// Plays only in the demo season. Optional so caches and servers from before it still decode.
+    var isDemo: Bool? = nil
 }
 
 enum Phase: String, Codable, Hashable, Sendable, CaseIterable {
@@ -134,6 +138,10 @@ struct APIInfo: Codable, Sendable {
     let apiVersion: Int
     let env: String
     let currentSeasonId: Int?
+    /// Not part of /seasons; the app offers it separately as "Demo ausprobieren".
+    let demoSeasonId: Int?
+    /// Public: shown next to "Demo ausprobieren".
+    let demoPin: String?
 }
 
 struct SeasonsResponse: Codable, Sendable {

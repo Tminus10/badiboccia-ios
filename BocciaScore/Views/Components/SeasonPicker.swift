@@ -11,7 +11,9 @@ struct SeasonPicker: View {
             Picker("Saison", selection: $model.selectedSeasonID) {
                 ForEach(model.seasons) { season in
                     Group {
-                        if season.isCurrent {
+                        if season.isDemo == true {
+                            Label(season.label, systemImage: "sparkles")
+                        } else if season.isCurrent {
                             Label(season.label, systemImage: "star.fill")
                         } else {
                             Text(season.label)
@@ -41,12 +43,12 @@ struct SeasonPicker: View {
     }
 }
 
-/// Banner for archived seasons: they're read-only, like on the website.
+/// Banner for archived seasons: they're read-only, like on the website. The demo season isn't archived.
 struct ArchivedSeasonNote: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
-        if let season = model.selectedSeason, !season.isCurrent {
+        if let season = model.selectedSeason, !season.isCurrent, season.isDemo != true {
             Label("Archiv – diese Saison ist abgeschlossen", systemImage: "archivebox")
                 .font(.footnote.weight(.medium))
                 .foregroundStyle(Theme.secondaryText)
