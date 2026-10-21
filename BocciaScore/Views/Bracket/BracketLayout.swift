@@ -11,7 +11,7 @@ struct BracketLayout: Equatable {
     var rowHeight: CGFloat
     var spacing: CGFloat = 14
 
-    var cardWidth: CGFloat { columnWidth - connectorGap }
+    var cardWidth: CGFloat { max(columnWidth - connectorGap, 0) }
     /// Date header + two team rows + the hairline between them.
     var cardHeight: CGFloat { headerHeight + 2 * rowHeight + 1 }
     var unit: CGFloat { cardHeight + spacing }

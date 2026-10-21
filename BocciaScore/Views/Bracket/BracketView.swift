@@ -19,7 +19,9 @@ struct BracketView: View {
     var body: some View {
         GeometryReader { proxy in
             let visible = BracketLayout.visibleColumns(forWidth: proxy.size.width, total: phases.count)
-            let columnWidth = (proxy.size.width - 2 * horizontalInset) / CGFloat(visible)
+            // Never negative or infinite: the first layout pass can report a zero width, and there
+            // are no phases before a season has loaded.
+            let columnWidth = max((proxy.size.width - 2 * horizontalInset) / CGFloat(max(visible, 1)), 0)
             let layout = BracketLayout(columnWidth: columnWidth, headerHeight: headerHeight, rowHeight: rowHeight)
             let maxFocus = phases.count - visible
             let focus = min(focusedColumn ?? 0, maxFocus)
@@ -92,7 +94,7 @@ struct BracketView: View {
         switch phase {
         case .groups:
             // No connector lines leave the group column, so it only needs a small gap.
-            GroupStageColumn(detail: detail, width: layout.columnWidth - 10)
+            GroupStageColumn(detail: detail, width: max(layout.columnWidth - 10, 0))
         case .quarterFinals:
             KnockoutColumn(round: 0, games: detail.bracket.qf, detail: detail, layout: layout, focusRound: focusRound, topInset: topInset)
         case .semiFinals:
@@ -377,7 +379,7 @@ struct PhaseBar: View {
                 }
             }
             GeometryReader { proxy in
-                let itemWidth = proxy.size.width / CGFloat(phases.count)
+                let itemWidth = proxy.size.width / CGFloat(max(phases.count, 1))
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 14)
                         .fill(Color.white.opacity(0.07))
