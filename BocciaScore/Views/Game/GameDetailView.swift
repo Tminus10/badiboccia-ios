@@ -38,7 +38,7 @@ struct GameDetailView: View {
         let teamB = game.teamBId.flatMap { teams[$0] }
         return List {
             Section {
-                ScoreHeader(game: game, teamA: teamA, teamB: teamB) { team in
+                ScoreHeader(game: game, teamA: teamA, teamB: teamB, note: missingResultText(game, detail)) { team in
                     shownTeam = .team(id: team.id, seasonID: detail.season.id)
                 }
                     .listRowBackground(Color.clear)
@@ -52,10 +52,8 @@ struct GameDetailView: View {
                 if let time = game.gameTime {
                     LabeledContent("Zeit", value: slotText(game, start: time))
                 }
-                if game.isEstimated {
-                    resultNote(String(localized: "Sieger bekannt, Resultat unbekannt"))
-                } else if !game.isComplete {
-                    resultNote(isPending(game, detail) ? String(localized: "noch offen") : String(localized: "Resultat unbekannt"))
+                if let note = missingResultText(game, detail) {
+                    resultNote(note)
                 } else {
                     LabeledContent("Resultat", value: "\(game.setsA ?? 0) : \(game.setsB ?? 0)")
                     if game.isDraw {
@@ -102,6 +100,13 @@ struct GameDetailView: View {
         detail.season.isRunning || !game.hasBothTeams
     }
 
+    /// Why a game has no score to show; nil if it has one.
+    private func missingResultText(_ game: Game, _ detail: SeasonDetail) -> String? {
+        if game.isEstimated { return String(localized: "Sieger bekannt, Resultat unbekannt") }
+        if game.isComplete { return nil }
+        return isPending(game, detail) ? String(localized: "noch offen") : String(localized: "Resultat unbekannt")
+    }
+
     /// The "Resultat" row for a game without a score to show.
     private func resultNote(_ text: String) -> some View {
         LabeledContent {
@@ -127,17 +132,26 @@ private struct ScoreHeader: View {
     let game: Game
     let teamA: Team?
     let teamB: Team?
+    var note: String? = nil
     let openTeam: (Team) -> Void
 
     var body: some View {
-        HStack(alignment: .center, spacing: 8) {
-            side(teamA, placeholder: game.placeholderA)
-            Text(scoreText)
-                .font(.system(size: 52, weight: .bold, design: .rounded))
-                .monospacedDigit()
-                .foregroundStyle(game.hasScore ? .white : Theme.tertiaryText)
-                .fixedSize()
-            side(teamB, placeholder: game.placeholderB)
+        VStack(spacing: 12) {
+            HStack(alignment: .center, spacing: 8) {
+                side(teamA, placeholder: game.placeholderA)
+                Text(scoreText)
+                    .font(.system(size: 52, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(game.hasScore ? .white : Theme.tertiaryText)
+                    .fixedSize()
+                side(teamB, placeholder: game.placeholderB)
+            }
+            if let note {
+                Text(note)
+                    .font(.footnote)
+                    .foregroundStyle(Theme.secondaryText)
+                    .multilineTextAlignment(.center)
+            }
         }
         .padding(.vertical, 20)
         .padding(.horizontal, 8)
