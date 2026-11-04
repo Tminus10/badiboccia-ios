@@ -129,6 +129,8 @@ struct GameDetailView: View {
 
 /// The Sports app's score layout: avatars and names left and right, big sets in between.
 private struct ScoreHeader: View {
+    private static let avatarSize: CGFloat = 64
+
     let game: Game
     let teamA: Team?
     let teamB: Team?
@@ -137,7 +139,7 @@ private struct ScoreHeader: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            // Avatars stay level even when one name wraps; the score centers on the full height.
+            // Avatars stay level when names differ in length, and the score stays centered on them.
             HStack(alignment: .top, spacing: 8) {
                 side(teamA, placeholder: game.placeholderA)
                 Text(scoreText)
@@ -145,10 +147,9 @@ private struct ScoreHeader: View {
                     .monospacedDigit()
                     .foregroundStyle(game.hasScore ? .white : Theme.tertiaryText)
                     .fixedSize()
-                    .frame(maxHeight: .infinity)
+                    .frame(height: Self.avatarSize)
                 side(teamB, placeholder: game.placeholderB)
             }
-            .fixedSize(horizontal: false, vertical: true)
             if let note {
                 Text(note)
                     .font(.footnote)
@@ -171,7 +172,7 @@ private struct ScoreHeader: View {
     private func side(_ team: Team?, placeholder: Placeholder?) -> some View {
         let content = VStack(spacing: 8) {
             ZStack(alignment: .topTrailing) {
-                TeamAvatar(team: team, size: 64)
+                TeamAvatar(team: team, size: Self.avatarSize)
                 if let team, team.id == game.winnerTeamId {
                     Image(systemName: "crown.fill")
                         .font(.caption)
