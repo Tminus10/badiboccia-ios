@@ -137,15 +137,18 @@ private struct ScoreHeader: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            HStack(alignment: .center, spacing: 8) {
+            // Avatars stay level even when one name wraps; the score centers on the full height.
+            HStack(alignment: .top, spacing: 8) {
                 side(teamA, placeholder: game.placeholderA)
                 Text(scoreText)
                     .font(.system(size: 52, weight: .bold, design: .rounded))
                     .monospacedDigit()
                     .foregroundStyle(game.hasScore ? .white : Theme.tertiaryText)
                     .fixedSize()
+                    .frame(maxHeight: .infinity)
                 side(teamB, placeholder: game.placeholderB)
             }
+            .fixedSize(horizontal: false, vertical: true)
             if let note {
                 Text(note)
                     .font(.footnote)
