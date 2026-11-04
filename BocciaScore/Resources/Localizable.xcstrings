@@ -926,6 +926,16 @@
         }
       }
     },
+    "Resultat unbekannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Result unknown"
+          }
+        }
+      }
+    },
     "Runde" : {
       "localizations" : {
         "en" : {
