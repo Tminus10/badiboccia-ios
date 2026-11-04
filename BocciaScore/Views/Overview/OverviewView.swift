@@ -79,6 +79,7 @@ struct OverviewView: View {
 struct PodiumCard: View {
     let podium: Podium
     let detail: SeasonDetail
+    @Environment(Navigator.self) private var navigator
 
     var body: some View {
         let teams = detail.teamsByID
@@ -98,24 +99,41 @@ struct PodiumCard: View {
         .accessibilityElement(children: .combine)
     }
 
+    @ViewBuilder
     private func place(_ rank: Int, team: Team?, medal: String, height: CGFloat) -> some View {
-        NavigationLink(value: team.map { Route.team(id: $0.id, seasonID: detail.season.id) }) {
-            VStack(spacing: 6) {
-                TeamAvatar(team: team, size: rank == 1 ? 56 : 44)
-                Text(team?.name ?? (detail.season.isRunning ? String(localized: "offen") : String(localized: "Resultat unbekannt")))
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(team == nil ? Theme.secondaryText : .white)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .frame(minHeight: 32, alignment: .top)
-                Text(medal)
-                    .font(.system(size: 34))
-                    .frame(maxWidth: .infinity, minHeight: height)
-                    .background(Color.white.opacity(rank == 1 ? 0.14 : 0.08), in: .rect(cornerRadius: 10))
+        let content = placeContent(rank, team: team, medal: medal, height: height)
+        if rank == 3, team == nil, let game = detail.bracket.third, game.hasBothTeams {
+            // No third place to link to, but the game itself can still be opened.
+            Button {
+                navigator.open(game)
+            } label: {
+                content.opacity(0.6)
             }
+            .buttonStyle(.plain)
+            .frame(maxWidth: .infinity)
+        } else {
+            NavigationLink(value: team.map { Route.team(id: $0.id, seasonID: detail.season.id) }) {
+                content
+            }
+            .buttonStyle(.plain)
+            .disabled(team == nil)
+            .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.plain)
-        .disabled(team == nil)
-        .frame(maxWidth: .infinity)
+    }
+
+    private func placeContent(_ rank: Int, team: Team?, medal: String, height: CGFloat) -> some View {
+        VStack(spacing: 6) {
+            TeamAvatar(team: team, size: rank == 1 ? 56 : 44)
+            Text(team?.name ?? (detail.season.isRunning ? String(localized: "offen") : String(localized: "Resultat unbekannt")))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(team == nil ? Theme.secondaryText : .white)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .frame(minHeight: 32, alignment: .top)
+            Text(medal)
+                .font(.system(size: 34))
+                .frame(maxWidth: .infinity, minHeight: height)
+                .background(Color.white.opacity(rank == 1 ? 0.14 : 0.08), in: .rect(cornerRadius: 10))
+        }
     }
 }
