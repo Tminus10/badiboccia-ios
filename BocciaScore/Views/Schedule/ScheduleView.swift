@@ -54,7 +54,9 @@ struct ScheduleView: View {
                     } header: {
                         Text("Noch ohne Termin")
                     } footer: {
-                        Text("Beteiligte Teams können den Termin in der App oder auf der Website festlegen.")
+                        if detail.season.isRunning {
+                            Text("Beteiligte Teams können den Termin in der App oder auf der Website festlegen.")
+                        }
                     }
                     .listRowBackground(Theme.card)
                 }

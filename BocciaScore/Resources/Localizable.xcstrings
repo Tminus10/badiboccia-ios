@@ -1250,6 +1250,16 @@
         }
       }
     },
+    "unbekannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unknown"
+          }
+        }
+      }
+    },
     "Wähle ein Team und gib den PIN %@ ein." : {
       "localizations" : {
         "en" : {

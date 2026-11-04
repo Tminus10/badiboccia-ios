@@ -157,6 +157,11 @@ extension Placeholder {
 
 // MARK: - Season
 
+extension SeasonSummary {
+    /// Same rule as `Season::isEditable` on the website: anything still open in a finished season stays open.
+    var isRunning: Bool { isCurrent || isDemo == true }
+}
+
 extension SeasonDetail {
     var teamsByID: [Int: Team] { Dictionary(uniqueKeysWithValues: teams.map { ($0.id, $0) }) }
 

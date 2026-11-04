@@ -98,14 +98,11 @@ struct PodiumCard: View {
         .accessibilityElement(children: .combine)
     }
 
-    /// Same rule as `Season::isEditable` on the website: a missing place in a finished season won't be played anymore.
-    private var seasonIsRunning: Bool { detail.season.isCurrent || detail.season.isDemo == true }
-
     private func place(_ rank: Int, team: Team?, medal: String, height: CGFloat) -> some View {
         NavigationLink(value: team.map { Route.team(id: $0.id, seasonID: detail.season.id) }) {
             VStack(spacing: 6) {
                 TeamAvatar(team: team, size: rank == 1 ? 56 : 44)
-                Text(team?.name ?? (seasonIsRunning ? String(localized: "offen") : String(localized: "Resultat unbekannt")))
+                Text(team?.name ?? (detail.season.isRunning ? String(localized: "offen") : String(localized: "Resultat unbekannt")))
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(team == nil ? Theme.secondaryText : .white)
                     .lineLimit(2)

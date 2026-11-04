@@ -48,15 +48,15 @@ struct GameDetailView: View {
             Section {
                 LabeledContent("Runde", value: game.title)
                 LabeledContent("Saison", value: detail.season.label)
-                LabeledContent("Datum", value: game.startDate?.formatted(.dateTime.weekday(.wide).day().month(.wide).year().swiss) ?? String(localized: "noch offen"))
+                LabeledContent("Datum", value: game.startDate?.formatted(.dateTime.weekday(.wide).day().month(.wide).year().swiss) ?? (isPending(game, detail) ? String(localized: "noch offen") : String(localized: "unbekannt")))
                 if let time = game.gameTime {
                     LabeledContent("Zeit", value: slotText(game, start: time))
                 }
                 if game.isEstimated {
-                    Text("Sieger bekannt, Resultat unbekannt")
-                        .font(.footnote)
-                        .foregroundStyle(Theme.secondaryText)
-                } else if game.isComplete {
+                    resultNote(String(localized: "Sieger bekannt, Resultat unbekannt"))
+                } else if !game.isComplete {
+                    resultNote(isPending(game, detail) ? String(localized: "noch offen") : String(localized: "Resultat unbekannt"))
+                } else {
                     LabeledContent("Resultat", value: "\(game.setsA ?? 0) : \(game.setsB ?? 0)")
                     if game.isDraw {
                         Text("Unterbrochenes Spiel – beide Teams erhalten einen Punkt.")
@@ -97,6 +97,23 @@ struct GameDetailView: View {
     }
 
     /// "18:00 – 19:30 (1½ h)", using the website's assumed slot length for the phase.
+    /// Whether missing details can still come. In a finished season the game won't be played anymore, they just never reached us.
+    private func isPending(_ game: Game, _ detail: SeasonDetail) -> Bool {
+        detail.season.isRunning || !game.hasBothTeams
+    }
+
+    /// The "Resultat" row for a game without a score to show.
+    private func resultNote(_ text: String) -> some View {
+        LabeledContent {
+            Text(text)
+                .font(.footnote)
+                .foregroundStyle(Theme.secondaryText)
+                .multilineTextAlignment(.trailing)
+        } label: {
+            Text("Resultat")
+        }
+    }
+
     private func slotText(_ game: Game, start: String) -> String {
         guard let begin = game.startDate else { return start }
         let end = begin.addingTimeInterval(TimeInterval(game.slotMinutes * 60))
