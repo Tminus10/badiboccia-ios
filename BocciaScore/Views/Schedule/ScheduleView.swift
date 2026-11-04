@@ -168,10 +168,10 @@ struct ScheduleRow: View {
                 .frame(width: 74)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    teamLine(game.teamAId.flatMap { teams[$0] }, sets: game.setsA)
-                    teamLine(game.teamBId.flatMap { teams[$0] }, sets: game.setsB)
+                    teamLine(game.teamAId.flatMap { teams[$0] }, sets: game.shownSetsA)
+                    teamLine(game.teamBId.flatMap { teams[$0] }, sets: game.shownSetsB)
                 }
-                if model.canEdit(game) && !game.isComplete {
+                if model.canEdit(game) && !game.hasScore {
                     Image(systemName: "square.and.pencil")
                         .foregroundStyle(Theme.qualifier)
                         .accessibilityLabel(Text("Resultat eintragen"))

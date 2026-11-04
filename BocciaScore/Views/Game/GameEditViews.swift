@@ -21,7 +21,7 @@ struct ResultEntryView: View {
         self.game = game
         self.teamA = teamA
         self.teamB = teamB
-        _score = State(initialValue: game.setsA.flatMap { a in game.setsB.map { Score(a: a, b: $0) } })
+        _score = State(initialValue: game.shownSetsA.flatMap { a in game.shownSetsB.map { Score(a: a, b: $0) } })
         let start = game.startDate ?? .now
         // Off for a game without a date, so saving a result never invents one; switching it on suggests today.
         _hasDate = State(initialValue: game.playedDate != nil)
@@ -64,7 +64,7 @@ struct ResultEntryView: View {
             .listRowBackground(Theme.card)
         }
         .themedScreen()
-        .navigationTitle(game.isComplete ? "Resultat korrigieren" : "Resultat eintragen")
+        .navigationTitle(game.hasScore ? "Resultat korrigieren" : "Resultat eintragen")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 if isSaving {

@@ -55,6 +55,9 @@ struct Game: Codable, Identifiable, Hashable, Sendable {
     let teamBId: Int?
     let setsA: Int?
     let setsB: Int?
+    /// Winner known but not the score: the sets are a placeholder 2:0, never show them (see `shownSetsA`).
+    /// Optional so caches and servers from before it still decode.
+    var resultEstimated: Bool? = nil
     /// "yyyy-MM-dd", local Swiss date.
     let playedDate: String?
     /// "HH:mm", nil means "all day" / no fixed time.

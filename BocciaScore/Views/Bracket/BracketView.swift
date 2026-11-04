@@ -423,9 +423,9 @@ struct BracketGameCard: View {
                     .padding(.horizontal, 10)
                     .frame(maxWidth: .infinity, minHeight: layout.headerHeight, maxHeight: layout.headerHeight, alignment: .leading)
                     .background(Theme.cardHeader)
-                row(team: game.teamAId.flatMap { teams[$0] }, sets: game.setsA, placeholder: game.placeholderA)
+                row(team: game.teamAId.flatMap { teams[$0] }, sets: game.shownSetsA, placeholder: game.placeholderA)
                 Divider().overlay(Theme.separator)
-                row(team: game.teamBId.flatMap { teams[$0] }, sets: game.setsB, placeholder: game.placeholderB)
+                row(team: game.teamBId.flatMap { teams[$0] }, sets: game.shownSetsB, placeholder: game.placeholderB)
             }
             .frame(width: layout.cardWidth, height: layout.cardHeight)
             .card(cornerRadius: 12)

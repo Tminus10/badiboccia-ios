@@ -1038,6 +1038,16 @@
         }
       }
     },
+    "Sieger bekannt, Resultat unbekannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winner known, result unknown"
+          }
+        }
+      }
+    },
     "Sieger Gruppe %@" : {
       "localizations" : {
         "en" : {

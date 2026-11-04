@@ -52,7 +52,11 @@ struct GameDetailView: View {
                 if let time = game.gameTime {
                     LabeledContent("Zeit", value: slotText(game, start: time))
                 }
-                if game.isComplete {
+                if game.isEstimated {
+                    Text("Sieger bekannt, Resultat unbekannt")
+                        .font(.footnote)
+                        .foregroundStyle(Theme.secondaryText)
+                } else if game.isComplete {
                     LabeledContent("Resultat", value: "\(game.setsA ?? 0) : \(game.setsB ?? 0)")
                     if game.isDraw {
                         Text("Unterbrochenes Spiel – beide Teams erhalten einen Punkt.")
@@ -68,7 +72,7 @@ struct GameDetailView: View {
                     NavigationLink {
                         ResultEntryView(game: game, teamA: teamA, teamB: teamB)
                     } label: {
-                        Label(game.isComplete ? "Resultat korrigieren" : "Resultat eintragen", systemImage: "square.and.pencil")
+                        Label(game.hasScore ? "Resultat korrigieren" : "Resultat eintragen", systemImage: "square.and.pencil")
                     }
                     NavigationLink {
                         ScheduleGameView(game: game, teamA: teamA, teamB: teamB)
@@ -79,7 +83,7 @@ struct GameDetailView: View {
                     Text("Jede Änderung wird mit dem Namen deines Teams protokolliert.")
                 }
                 .listRowBackground(Theme.card)
-            } else if model.session == nil, game.hasBothTeams, model.selectedSeason?.isCurrent == true, !game.isComplete {
+            } else if model.session == nil, game.hasBothTeams, model.selectedSeason?.isCurrent == true, !game.hasScore {
                 Section {
                     Text("Spielst du in diesem Spiel? Melde dich unter „Mein Team“ mit dem PIN deines Teams an, um das Resultat einzutragen.")
                         .font(.footnote)
@@ -114,7 +118,7 @@ private struct ScoreHeader: View {
             Text(scoreText)
                 .font(.system(size: 52, weight: .bold, design: .rounded))
                 .monospacedDigit()
-                .foregroundStyle(game.isComplete ? .white : Theme.tertiaryText)
+                .foregroundStyle(game.hasScore ? .white : Theme.tertiaryText)
                 .fixedSize()
             side(teamB, placeholder: game.placeholderB)
         }
@@ -125,7 +129,7 @@ private struct ScoreHeader: View {
     }
 
     private var scoreText: String {
-        guard let a = game.setsA, let b = game.setsB else { return "– : –" }
+        guard let a = game.shownSetsA, let b = game.shownSetsB else { return "– : –" }
         return "\(a) : \(b)"
     }
 

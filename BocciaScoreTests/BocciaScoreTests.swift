@@ -65,6 +65,26 @@ struct DomainTests {
              playedDate: date, gameTime: time, slotMinutes: 90, winnerTeamId: nil, placeholderA: nil, placeholderB: nil, updatedAt: nil)
     }
 
+    @Test func estimatedResultHidesItsPlaceholderScore() throws {
+        let json = #"""
+        {"id": 1, "season_id": 1, "phase": "sf", "group_id": null, "group_name": null, "slot_index": 1,
+         "team_a_id": 10, "team_b_id": 20, "sets_a": 0, "sets_b": 2, "result_estimated": true,
+         "played_date": null, "game_time": null, "slot_minutes": 180, "winner_team_id": 20,
+         "placeholder_a": null, "placeholder_b": null, "updated_at": null}
+        """#
+        let estimated = try APIClient.decode(Game.self, from: Data(json.utf8))
+        #expect(estimated.isEstimated)
+        #expect(estimated.isComplete)
+        #expect(!estimated.hasScore)
+        #expect(estimated.shownSetsA == nil && estimated.shownSetsB == nil)
+        #expect(estimated.winnerTeamId == 20)
+
+        // Servers from before the flag don't send it.
+        let plain = game(phase: .sf, setsA: 2, setsB: 1)
+        #expect(!plain.isEstimated && plain.hasScore)
+        #expect(plain.shownSetsA == 2 && plain.shownSetsB == 1)
+    }
+
     @Test func drawsOnlyInGroupPhase() {
         #expect(game(phase: .group).allowedScores.contains(Score(a: 1, b: 1)))
         #expect(!game(phase: .qf).allowedScores.contains(Score(a: 1, b: 1)))

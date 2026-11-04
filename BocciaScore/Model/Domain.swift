@@ -57,6 +57,11 @@ extension Game {
     var isComplete: Bool { setsA != nil && setsB != nil }
     var hasBothTeams: Bool { teamAId != nil && teamBId != nil }
     var isDraw: Bool { isComplete && setsA == setsB }
+    var isEstimated: Bool { resultEstimated == true }
+    /// A real score is known; an estimated game has a winner but still lacks its result.
+    var hasScore: Bool { isComplete && !isEstimated }
+    var shownSetsA: Int? { isEstimated ? nil : setsA }
+    var shownSetsB: Int? { isEstimated ? nil : setsB }
 
     /// Start of the game in Swiss time; midday if only the date is known.
     var startDate: Date? {

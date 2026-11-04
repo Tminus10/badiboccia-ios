@@ -110,7 +110,7 @@ struct ScoreRow: View {
         } label: {
             HStack(spacing: 8) {
                 side(teamA, placeholder: game.placeholderA)
-                score(game.setsA, isWinner: game.winnerTeamId != nil && game.winnerTeamId == teamA?.id)
+                score(game.shownSetsA, isWinner: game.winnerTeamId != nil && game.winnerTeamId == teamA?.id)
                 VStack(spacing: 4) {
                     Text(game.title)
                         .font(.caption.weight(.medium))
@@ -123,7 +123,7 @@ struct ScoreRow: View {
                         .minimumScaleFactor(0.8)
                 }
                 .frame(minWidth: 84)
-                score(game.setsB, isWinner: game.winnerTeamId != nil && game.winnerTeamId == teamB?.id)
+                score(game.shownSetsB, isWinner: game.winnerTeamId != nil && game.winnerTeamId == teamB?.id)
                 side(teamB, placeholder: game.placeholderB)
             }
             .padding(.horizontal, 12)
@@ -161,19 +161,32 @@ struct ScoreRow: View {
         .frame(maxWidth: .infinity)
     }
 
+    @ViewBuilder
     private func score(_ sets: Int?, isWinner: Bool) -> some View {
-        Text(sets.map(String.init) ?? "–")
-            .font(.system(size: 40, weight: .bold, design: .rounded))
-            .monospacedDigit()
-            .foregroundStyle(sets == nil ? Theme.tertiaryText : (game.winnerTeamId == nil || isWinner ? .white : Theme.secondaryText))
-            .frame(minWidth: 28)
+        if game.isEstimated && isWinner {
+            // No score to show, but the winner is known.
+            Image(systemName: "crown.fill")
+                .font(.title2)
+                .foregroundStyle(Theme.qualifier)
+                .frame(minWidth: 28)
+        } else {
+            Text(sets.map(String.init) ?? "–")
+                .font(.system(size: 40, weight: .bold, design: .rounded))
+                .monospacedDigit()
+                .foregroundStyle(sets == nil ? Theme.tertiaryText : (game.winnerTeamId == nil || isWinner ? .white : Theme.secondaryText))
+                .frame(minWidth: 28)
+        }
     }
 
     private func accessibilityText(_ teamA: Team?, _ teamB: Team?) -> String {
         let a = teamA?.name ?? game.placeholderA?.label ?? "–"
         let b = teamB?.name ?? game.placeholderB?.label ?? "–"
         var parts = [game.title, "\(a) – \(b)"]
-        if let setsA = game.setsA, let setsB = game.setsB {
+        if game.isEstimated {
+            let winner = [teamA, teamB].compactMap { $0 }.first { $0.id == game.winnerTeamId }
+            if let winner { parts.append(winner.name) }
+            parts.append(String(localized: "Sieger bekannt, Resultat unbekannt"))
+        } else if let setsA = game.setsA, let setsB = game.setsB {
             parts.append(String(localized: "Resultat \(setsA) zu \(setsB)"))
         }
         if let date = game.dateLabel { parts.append(date) }

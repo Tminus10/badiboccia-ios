@@ -195,8 +195,10 @@ private struct TeamGameRow: View {
             ? (String(localized: "S", comment: "Badge: won"), .green)
             : mine < theirs ? (String(localized: "N", comment: "Badge: lost"), .red) : (String(localized: "U", comment: "Badge: draw"), .gray)
         return HStack(spacing: 8) {
-            Text("\(mine):\(theirs)")
-                .font(.body.monospacedDigit().weight(.semibold))
+            if game.hasScore {
+                Text("\(mine):\(theirs)")
+                    .font(.body.monospacedDigit().weight(.semibold))
+            }
             Text(letter)
                 .font(.caption.weight(.bold))
                 .frame(width: 22, height: 22)
