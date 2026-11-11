@@ -382,6 +382,16 @@
         }
       }
     },
+    "Foto vergrössern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enlarge Photo"
+          }
+        }
+      }
+    },
     "Foto wird hochgeladen …" : {
       "localizations" : {
         "en" : {

@@ -11,6 +11,8 @@ struct TeamDetailView: View {
     @State private var detail: TeamDetail?
     @State private var error: APIError?
     @State private var seasonID: Int?
+    @State private var showsPhoto = false
+    @Namespace private var photoTransition
 
     var body: some View {
         Group {
@@ -58,7 +60,22 @@ struct TeamDetailView: View {
         return List {
             Section {
                 VStack(spacing: 10) {
-                    TeamAvatar(team: detail.team, size: 96)
+                    if detail.team.photoUrl != nil {
+                        Button {
+                            showsPhoto = true
+                        } label: {
+                            TeamAvatar(team: detail.team, size: 96)
+                        }
+                        .buttonStyle(.plain)
+                        .matchedTransitionSource(id: "photo", in: photoTransition)
+                        .accessibilityLabel(Text("Foto vergrössern"))
+                        .fullScreenCover(isPresented: $showsPhoto) {
+                            TeamPhotoView(team: detail.team)
+                                .navigationTransition(.zoom(sourceID: "photo", in: photoTransition))
+                        }
+                    } else {
+                        TeamAvatar(team: detail.team, size: 96)
+                    }
                     Text(detail.team.name)
                         .font(.title2.weight(.bold))
                         .multilineTextAlignment(.center)
