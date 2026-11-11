@@ -168,7 +168,8 @@ struct TeamDetailView: View {
 }
 
 /// One of the team's games, from its point of view: opponent, round, date, and the result (W/L).
-private struct TeamGameRow: View {
+/// Also used for the logged-in team's games under "Mein Team".
+struct TeamGameRow: View {
     let game: Game
     let teamID: Int
     let opponent: Team?
@@ -195,10 +196,15 @@ private struct TeamGameRow: View {
                         .font(.caption)
                         .foregroundStyle(Theme.secondaryText)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                 }
                 Spacer()
                 if game.isComplete {
                     resultBadge
+                } else if model.canEdit(game) {
+                    Image(systemName: "square.and.pencil")
+                        .foregroundStyle(Theme.qualifier)
+                        .accessibilityLabel(Text("Resultat eintragen"))
                 }
             }
             .contentShape(.rect)

@@ -350,7 +350,7 @@ private struct LoggedInView: View {
                             .foregroundStyle(Theme.secondaryText)
                     }
                     ForEach(open) { game in
-                        ScheduleRow(game: game, detail: detail)
+                        TeamGameRow(game: game, teamID: team.id, opponent: opponent(in: game, detail: detail))
                     }
                 } header: {
                     Text("Offene Spiele")
@@ -364,7 +364,7 @@ private struct LoggedInView: View {
                 if !played.isEmpty {
                     Section("Gespielt") {
                         ForEach(Array(played)) { game in
-                            ScheduleRow(game: game, detail: detail)
+                            TeamGameRow(game: game, teamID: team.id, opponent: opponent(in: game, detail: detail))
                         }
                     }
                     .listRowBackground(Theme.card)
@@ -389,5 +389,9 @@ private struct LoggedInView: View {
             await model.refresh()
             await model.validateSession()
         }
+    }
+
+    private func opponent(in game: Game, detail: SeasonDetail) -> Team? {
+        game.opponent(of: team.id).flatMap { detail.teamsByID[$0] }
     }
 }
