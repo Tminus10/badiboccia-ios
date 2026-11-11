@@ -161,6 +161,16 @@
         }
       }
     },
+    "Bevorstehend – diese Saison hat noch nicht begonnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming – this season hasn't started yet"
+          }
+        }
+      }
+    },
     "Boccia" : {
       "localizations" : {
         "en" : {

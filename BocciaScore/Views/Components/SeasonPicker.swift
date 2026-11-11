@@ -43,16 +43,23 @@ struct SeasonPicker: View {
     }
 }
 
-/// Banner for archived seasons: they're read-only, like on the website. The demo season isn't archived.
+/// Banner for seasons that aren't running: archived ones are read-only, like on the website, and
+/// upcoming ones haven't started yet. The demo season is neither.
 struct ArchivedSeasonNote: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
         if let season = model.selectedSeason, !season.isCurrent, season.isDemo != true {
-            Label("Archiv – diese Saison ist abgeschlossen", systemImage: "archivebox")
-                .font(.footnote.weight(.medium))
-                .foregroundStyle(Theme.secondaryText)
-                .frame(maxWidth: .infinity)
+            Group {
+                if season.isUpcoming == true {
+                    Label("Bevorstehend – diese Saison hat noch nicht begonnen", systemImage: "calendar.badge.clock")
+                } else {
+                    Label("Archiv – diese Saison ist abgeschlossen", systemImage: "archivebox")
+                }
+            }
+            .font(.footnote.weight(.medium))
+            .foregroundStyle(Theme.secondaryText)
+            .frame(maxWidth: .infinity)
         }
     }
 }

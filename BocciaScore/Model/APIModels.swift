@@ -10,6 +10,9 @@ struct SeasonSummary: Codable, Identifiable, Hashable, Sendable {
     let isCurrent: Bool
     /// The demo season (badiboccia: scripts/seed-demo.php). Optional so caches and servers from before it still decode.
     var isDemo: Bool? = nil
+    /// Set up but not started yet (badiboccia: `Season::isUpcoming`), so not archived either.
+    /// Optional so caches and servers from before it still decode.
+    var isUpcoming: Bool? = nil
 }
 
 struct Team: Codable, Identifiable, Hashable, Sendable {
