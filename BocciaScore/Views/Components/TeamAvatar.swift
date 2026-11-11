@@ -1,15 +1,21 @@
 import SwiftUI
 
-/// A team's round badge -- its photo, or its pastel color with initials -- in the spot where the
-/// Sports app shows a flag. A nil team (slot not decided yet) shows an empty dimmed circle.
+/// A team's badge -- its photo, or its pastel color with initials -- in the spot where the
+/// Sports app shows a flag, shaped as a squircle like an app icon. A nil team (slot not decided
+/// yet) shows an empty dimmed squircle.
 struct TeamAvatar: View {
     let team: Team?
     var size: CGFloat = 28
 
+    /// Continuous rounded corners at the app-icon ratio; the website's .avatar matches it.
+    private var shape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: size * 0.225, style: .continuous)
+    }
+
     var body: some View {
         ZStack {
             if let team {
-                Circle().fill(Color(hex: team.colorHex))
+                shape.fill(Color(hex: team.colorHex))
                 Text(team.initials)
                     .font(.system(size: size * 0.38, weight: .bold, design: .rounded))
                     .foregroundStyle(.black.opacity(0.72))
@@ -20,14 +26,14 @@ struct TeamAvatar: View {
                             image.resizable().scaledToFill()
                         }
                     }
-                    .clipShape(Circle())
+                    .clipShape(shape)
                 }
             } else {
-                Circle().fill(Color.white.opacity(0.08))
+                shape.fill(Color.white.opacity(0.08))
             }
         }
         .frame(width: size, height: size)
-        .overlay(Circle().strokeBorder(Color.white.opacity(0.15), lineWidth: 0.5))
+        .overlay(shape.strokeBorder(Color.white.opacity(0.15), lineWidth: 0.5))
         .accessibilityHidden(true)
     }
 }
