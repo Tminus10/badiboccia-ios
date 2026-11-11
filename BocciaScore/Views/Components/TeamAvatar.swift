@@ -33,7 +33,14 @@ struct TeamAvatar: View {
             }
         }
         .frame(width: size, height: size)
-        .overlay(shape.strokeBorder(Color.white.opacity(0.15), lineWidth: 0.5))
+        .overlay {
+            // A border in the team's color, like on the website.
+            if let team {
+                shape.strokeBorder(Color(hex: team.colorHex), lineWidth: max(1.5, size / 32))
+            } else {
+                shape.strokeBorder(Color.white.opacity(0.15), lineWidth: 0.5)
+            }
+        }
         .accessibilityHidden(true)
     }
 }
