@@ -68,6 +68,7 @@ struct TeamDetailView: View {
                         }
                         .buttonStyle(.plain)
                         .matchedTransitionSource(id: "photo", in: photoTransition)
+                        .hoverEffect(.lift)
                         .accessibilityLabel(Text("Foto vergrössern"))
                         .fullScreenCover(isPresented: $showsPhoto) {
                             TeamPhotoView(team: detail.team)
