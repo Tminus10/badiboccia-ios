@@ -80,7 +80,9 @@ struct ScoreboardCard: View {
                 // Results without a date (older seasons) still deserve a place: show the latest bracket games.
                 return Array(detail.bracketGames.filter(\.isComplete).reversed().prefix(4))
             }
-            return played.filter { $0.playedDate == lastDay }.sorted(by: Game.chronological)
+            // Latest game on top, like the schedule; games without a time at the end.
+            return played.filter { $0.playedDate == lastDay }
+                .sorted { ($0.gameTime ?? "", $0.id) > ($1.gameTime ?? "", $1.id) }
         }
     }
 
