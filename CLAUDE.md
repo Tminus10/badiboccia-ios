@@ -3,6 +3,12 @@
 SwiftUI app for the BadiBoccia league; companion to the PHP website in
 `../badiboccia`, whose `/api/v1` (`src/Controllers/ApiController.php`) it uses.
 
+**Keep the Android app in sync**: `../badiboccia-android` (Kotlin, Jetpack Compose) has the same
+features, screens, rules and wording. A change to features, behavior, business rules, API models
+or texts here needs the same change there, in the same task (or say clearly that it's still
+missing). Its `CLAUDE.md` maps the files (e.g. `AppModel.swift` → `app/AppModel.kt`,
+`Localizable.xcstrings` → `res/values*/strings.xml`).
+
 ## Build & run
 
 - Project `BocciaScore.xcodeproj`, scheme **BocciaScore** (app + unit tests), scheme **BocciaScoreUITests** (UI tests, need the local website).
