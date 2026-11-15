@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// Every game of the season by day (plus the website's calendar entries such as the group draw),
-/// latest day first: the games that have no date yet, upcoming days, today, then past days.
+/// latest first: the games that have no date yet, upcoming days, today, then past days, and
+/// within a day the latest game on top.
 /// It opens at today. Logged-in teams can narrow it down to their own games.
 struct ScheduleView: View {
     @Environment(AppModel.self) private var model
@@ -62,13 +63,15 @@ struct ScheduleView: View {
                 }
                 ForEach(days, id: \.day) { day in
                     Section {
-                        ForEach(day.events) { event in
-                            EventRow(event: event)
-                                .id(RowID.event(event.id))
-                        }
-                        ForEach(day.games) { game in
-                            ScheduleRow(game: game, detail: detail)
-                                .id(RowID.game(game.id))
+                        ForEach(day.entries) { entry in
+                            switch entry {
+                            case .game(let game):
+                                ScheduleRow(game: game, detail: detail)
+                                    .id(entry.id)
+                            case .event(let event):
+                                EventRow(event: event)
+                                    .id(entry.id)
+                            }
                         }
                     } header: {
                         Text(dayTitle(day.day))
@@ -99,37 +102,65 @@ struct ScheduleView: View {
         case game(Int), event(Int)
     }
 
+    /// A row of a day: a game or a calendar entry.
+    private enum Entry: Identifiable {
+        case game(Game), event(CalendarEvent)
+
+        var id: RowID {
+            switch self {
+            case .game(let game): .game(game.id)
+            case .event(let event): .event(event.id)
+            }
+        }
+
+        var time: String? {
+            switch self {
+            case .game(let game): game.gameTime
+            case .event(let event): event.time
+            }
+        }
+
+        /// Latest first, like the days; without a time (all day) at the end of the day.
+        static func latestFirst(_ a: Entry, _ b: Entry) -> Bool {
+            let timeA = a.time ?? "", timeB = b.time ?? ""
+            if timeA != timeB { return timeA > timeB }
+            switch (a, b) {
+            case let (.game(x), .game(y)): return x.id > y.id
+            case let (.event(x), .event(y)): return x.id > y.id
+            case (.game, .event): return true
+            case (.event, .game): return false
+            }
+        }
+    }
+
     /// The last row above a day. Scrolling to a section only reaches its first row, which leaves
     /// the day's header out of sight, so this scrolls to the end of the (upcoming) day above instead.
     private func rowAbove(_ index: Int?, days: [Day], undated: [Game]) -> RowID? {
         guard let index else { return nil }
         guard index > 0 else { return undated.last.map { .game($0.id) } }
-        let day = days[index - 1]
-        if let game = day.games.last { return .game(game.id) }
-        return day.events.last.map { .event($0.id) }
+        return days[index - 1].entries.last?.id
     }
 
     private struct Day {
         let day: String
-        var games: [Game] = []
-        var events: [CalendarEvent] = []
+        var entries: [Entry] = []
     }
 
     private func scheduleDays(_ detail: SeasonDetail) -> [Day] {
         var byDay: [String: Day] = [:]
         for game in games(detail) {
             guard let date = game.playedDate else { continue }
-            byDay[date, default: Day(day: date)].games.append(game)
+            byDay[date, default: Day(day: date)].entries.append(.game(game))
         }
         if !onlyMine {
             for event in detail.events {
-                byDay[event.date, default: Day(day: event.date)].events.append(event)
+                byDay[event.date, default: Day(day: event.date)].entries.append(.event(event))
             }
         }
         return byDay.values
             .map { day in
                 var day = day
-                day.games.sort(by: Game.chronological)
+                day.entries.sort(by: Entry.latestFirst)
                 return day
             }
             .sorted { $0.day > $1.day }
