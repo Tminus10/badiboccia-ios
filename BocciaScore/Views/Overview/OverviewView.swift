@@ -48,9 +48,13 @@ struct OverviewView: View {
     }
 
     private var title: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "circle.hexagongrid.fill")
-                .foregroundStyle(Theme.qualifier)
+        HStack(spacing: 10) {
+            // The app icon, so the home screen and the app look the same.
+            Image(.appLogo)
+                .resizable()
+                .frame(width: 44, height: 44)
+                .clipShape(.rect(cornerRadius: 10))
+                .accessibilityHidden(true)
             Text("Boccia")
             ServerBadge()
                 .padding(.leading, 4)
